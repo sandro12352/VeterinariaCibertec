@@ -6,18 +6,9 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "sistema_veterinaria": {
+    "veterinaria-frontend": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "type": "component",
-          "skipTests": true
-        },
-        "@schematics/angular:service": {
-          "type": "service",
-          "skipTests":true
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -35,12 +26,7 @@
             ],
             "styles": [
               "src/styles.css"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            ]
           },
           "configurations": {
             "production": {
@@ -70,10 +56,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "sistema_veterinaria:build:production"
+              "buildTarget": "veterinaria-frontend:build:production"
             },
             "development": {
-              "buildTarget": "sistema_veterinaria:build:development"
+              "buildTarget": "veterinaria-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -1,0 +1,100 @@
+<div class="container py-4">
+  <h1 class="mb-4">Atenciones</h1>
+
+  @if (mensaje()) {
+    <div
+      class="alert"
+      [class.alert-success]="!esError()"
+      [class.alert-danger]="esError()"
+    >
+      {{ mensaje() }}
+    </div>
+  }
+
+  <form
+    #atencionForm="ngForm"
+    class="card card-body mb-4"
+    (ngSubmit)="guardar()"
+  >
+    <h2 class="h5 mb-3">
+      {{ atencion.id ? 'Editar atención' : 'Nueva atención' }}
+    </h2>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label for="motivo" class="form-label">Motivo</label>
+        <input id="motivo" name="motivo" class="form-control"
+               [(ngModel)]="atencion.motivo" required />
+      </div>
+
+      <div class="col-md-6">
+        <label for="estado" class="form-label">Estado</label>
+        <input id="estado" name="estado" class="form-control"
+               [(ngModel)]="atencion.estado" required />
+      </div>
+
+      <div class="col-md-4">
+        <label for="fecha" class="form-label">Fecha</label>
+        <input id="fecha" name="fecha" type="date" class="form-control"
+               [(ngModel)]="atencion.fecha" required />
+      </div>
+
+      <div class="col-md-4">
+        <label for="mascotaId" class="form-label">Mascota ID</label>
+        <input id="mascotaId" name="mascotaId" type="number" class="form-control"
+               [(ngModel)]="atencion.mascotaId" required />
+      </div>
+
+      <div class="col-md-4">
+        <label for="personalMedicoId" class="form-label">Personal Médico ID</label>
+        <input id="personalMedicoId" name="personalMedicoId" type="number" class="form-control"
+               [(ngModel)]="atencion.personalMedicoId" required />
+      </div>
+    </div>
+
+    <div class="mt-3 d-flex gap-2">
+      <button type="submit" class="btn btn-primary" [disabled]="atencionForm.invalid">
+        {{ atencion.id ? 'Actualizar' : 'Guardar' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Motivo</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Mascota</th>
+          <th>Personal Médico</th>
+          <th class="text-end">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of atenciones(); track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.motivo }}</td>
+            <td>{{ item.estado }}</td>
+            <td>{{ item.fecha }}</td>
+            <td>{{ item.mascotaId }}</td>
+            <td>{{ item.personalMedicoId }}</td>
+            <td class="text-end">
+              <button type="button" class="btn btn-sm btn-warning me-2" (click)="editar(item)">Editar</button>
+              <button type="button" class="btn btn-sm btn-danger" (click)="eliminar(item)">Eliminar</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7" class="py-4 text-center text-muted">
+              No hay atenciones registradas.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
