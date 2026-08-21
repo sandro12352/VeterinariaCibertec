@@ -1,0 +1,150 @@
+<div class="container py-4">
+  <h1 class="mb-4">
+    Personal Médico
+  </h1>
+
+  @if (mensaje()) {
+    <div
+      class="alert"
+      [class.alert-success]="!esError()"
+      [class.alert-danger]="esError()"
+    >
+      {{ mensaje() }}
+    </div>
+  }
+
+  <form
+    #medicoForm="ngForm"
+    class="card card-body mb-4"
+    (ngSubmit)="guardar()"
+  >
+    <h2 class="h5 mb-3">
+      {{ medico.usuarioId ? 'Editar médico' : 'Nuevo médico' }}
+    </h2>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label for="personaNombre" class="form-label">
+          Nombre
+        </label>
+        <input
+          id="personaNombre"
+          name="personaNombre"
+          class="form-control"
+          maxlength="100"
+          [(ngModel)]="medico.personaNombre"
+          required
+        />
+      </div>
+
+      <div class="col-md-6">
+        <label for="rolNombre" class="form-label">
+          Rol
+        </label>
+        <input
+          id="rolNombre"
+          name="rolNombre"
+          class="form-control"
+          maxlength="50"
+          [(ngModel)]="medico.rolNombre"
+          required
+        />
+      </div>
+
+      <div class="col-md-6">
+        <label for="especialidad" class="form-label">
+          Especialidad
+        </label>
+        <input
+          id="especialidad"
+          name="especialidad"
+          class="form-control"
+          maxlength="100"
+          [(ngModel)]="medico.especialidad"
+          required
+        />
+      </div>
+
+      <div class="col-md-6">
+        <label for="numeroColegiatura" class="form-label">
+          Número Colegiatura
+        </label>
+        <input
+          id="numeroColegiatura"
+          name="numeroColegiatura"
+          class="form-control"
+          maxlength="20"
+          [(ngModel)]="medico.numeroColegiatura"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="mt-3 d-flex gap-2">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="medicoForm.invalid"
+      >
+        {{ medico.usuarioId ? 'Actualizar' : 'Guardar' }}
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="cancelar()"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>Usuario ID</th>
+          <th>Nombre</th>
+          <th>Rol</th>
+          <th>Especialidad</th>
+          <th>Número Colegiatura</th>
+          <th class="text-end">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (item of medicos(); track item.usuarioId) {
+          <tr>
+            <td>{{ item.usuarioId }}</td>
+            <td>{{ item.personaNombre }}</td>
+            <td>{{ item.rolNombre }}</td>
+            <td>{{ item.especialidad }}</td>
+            <td>{{ item.numeroColegiatura }}</td>
+            <td class="text-end">
+              <button
+                type="button"
+                class="btn btn-sm btn-warning me-2"
+                (click)="editar(item)"
+              >
+                Editar
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm btn-danger"
+                (click)="eliminar(item)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="py-4 text-center text-muted">
+              No hay médicos registrados.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
