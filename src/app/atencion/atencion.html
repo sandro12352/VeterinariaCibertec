@@ -1,100 +1,1104 @@
-<div class="container py-4">
-  <h1 class="mb-4">Atenciones</h1>
+<div class="min-h-screen bg-slate-50 px-6 py-8 lg:px-8">
 
+  <!-- ==========================================
+       HEADER
+  =========================================== -->
+  <div class="mb-8">
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p
+          class="text-xs
+                 font-bold
+                 uppercase
+                 tracking-[0.18em]
+                 text-emerald-600"
+        >
+          Atención veterinaria
+        </p>
+
+        <h1
+          class="mt-2
+                 text-3xl
+                 font-bold
+                 tracking-tight
+                 text-slate-900"
+        >
+          Atenciones
+        </h1>
+
+        <p class="mt-1 text-sm text-slate-500">
+          Gestiona las atenciones médicas realizadas a las mascotas.
+        </p>
+      </div>
+
+      <div
+        class="flex
+               items-center
+               gap-2
+               rounded-xl
+               border
+               border-slate-200
+               bg-white
+               px-4
+               py-2.5
+               shadow-sm"
+      >
+        <svg
+          class="h-5 w-5 text-emerald-600"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 6v6l4 2"
+          />
+          <circle
+            cx="12"
+            cy="12"
+            r="9"
+          />
+        </svg>
+
+        <span class="text-sm font-medium text-slate-600">
+          Gestión médica
+        </span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       MENSAJE
+  =========================================== -->
   @if (mensaje()) {
     <div
-      class="alert"
-      [class.alert-success]="!esError()"
-      [class.alert-danger]="esError()"
+      class="mb-6
+             flex
+             items-center
+             gap-3
+             rounded-xl
+             border
+             px-4
+             py-3
+             text-sm
+             font-medium"
+      [class.border-emerald-200]="!esError()"
+      [class.bg-emerald-50]="!esError()"
+      [class.text-emerald-700]="!esError()"
+      [class.border-red-200]="esError()"
+      [class.bg-red-50]="esError()"
+      [class.text-red-700]="esError()"
     >
-      {{ mensaje() }}
+
+      @if (!esError()) {
+        <svg
+          class="h-5 w-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m5 12 4 4L19 6"
+          />
+        </svg>
+      } @else {
+        <svg
+          class="h-5 w-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="9"
+          />
+
+          <path
+            stroke-linecap="round"
+            d="M12 8v4M12 16h.01"
+          />
+        </svg>
+      }
+
+      <span>
+        {{ mensaje() }}
+      </span>
     </div>
   }
 
+
+  <!-- ==========================================
+       FORMULARIO
+  =========================================== -->
   <form
     #atencionForm="ngForm"
-    class="card card-body mb-4"
+    class="mb-8
+           overflow-hidden
+           rounded-2xl
+           border
+           border-slate-200
+           bg-white
+           shadow-sm"
     (ngSubmit)="guardar()"
   >
-    <h2 class="h5 mb-3">
-      {{ atencion.id ? 'Editar atención' : 'Nueva atención' }}
-    </h2>
 
-    <div class="row g-3">
-      <div class="col-md-6">
-        <label for="motivo" class="form-label">Motivo</label>
-        <input id="motivo" name="motivo" class="form-control"
-               [(ngModel)]="atencion.motivo" required />
-      </div>
+    <!-- Form Header -->
+    <div
+      class="border-b
+             border-slate-100
+             px-6
+             py-5
+             lg:px-7"
+    >
+      <div class="flex items-center gap-3">
 
-      <div class="col-md-6">
-        <label for="estado" class="form-label">Estado</label>
-        <input id="estado" name="estado" class="form-control"
-               [(ngModel)]="atencion.estado" required />
-      </div>
+        <div
+          class="flex
+                 h-10
+                 w-10
+                 shrink-0
+                 items-center
+                 justify-center
+                 rounded-xl
+                 bg-emerald-100
+                 text-emerald-600"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 5v14M5 12h14"
+            />
+          </svg>
+        </div>
 
-      <div class="col-md-4">
-        <label for="fecha" class="form-label">Fecha</label>
-        <input id="fecha" name="fecha" type="date" class="form-control"
-               [(ngModel)]="atencion.fecha" required />
-      </div>
+        <div>
+          <h2
+            class="text-base
+                   font-bold
+                   text-slate-900"
+          >
+            {{ atencion.id ? 'Editar atención' : 'Nueva atención' }}
+          </h2>
 
-      <div class="col-md-4">
-        <label for="mascotaId" class="form-label">Mascota ID</label>
-        <input id="mascotaId" name="mascotaId" type="number" class="form-control"
-               [(ngModel)]="atencion.mascotaId" required />
-      </div>
+          <p class="mt-0.5 text-xs text-slate-400">
+            Registra la información de la atención veterinaria.
+          </p>
+        </div>
 
-      <div class="col-md-4">
-        <label for="personalMedicoId" class="form-label">Personal Médico ID</label>
-        <input id="personalMedicoId" name="personalMedicoId" type="number" class="form-control"
-               [(ngModel)]="atencion.personalMedicoId" required />
       </div>
     </div>
 
-    <div class="mt-3 d-flex gap-2">
-      <button type="submit" class="btn btn-primary" [disabled]="atencionForm.invalid">
-        {{ atencion.id ? 'Actualizar' : 'Guardar' }}
-      </button>
-      <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+
+    <!-- Form Body -->
+    <div class="px-6 py-6 lg:px-7">
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+
+        <!-- MOTIVO -->
+        <div class="md:col-span-2 lg:col-span-2">
+
+          <label
+            for="motivo"
+            class="mb-2
+                   block
+                   text-sm
+                   font-semibold
+                   text-slate-700"
+          >
+            Motivo
+          </label>
+
+          <div class="relative">
+
+            <div
+              class="pointer-events-none
+                     absolute
+                     inset-y-0
+                     left-0
+                     flex
+                     items-center
+                     pl-3.5"
+            >
+              <svg
+                class="h-5 w-5 text-slate-400"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 4h12a2 2 0 0 1 2 2v12
+                     a2 2 0 0 1-2 2H6
+                     a2 2 0 0 1-2-2V6
+                     a2 2 0 0 1 2-2Z"
+                />
+
+                <path
+                  stroke-linecap="round"
+                  d="M8 9h8M8 13h8M8 17h5"
+                />
+              </svg>
+            </div>
+
+            <input
+              id="motivo"
+              name="motivo"
+              [(ngModel)]="atencion.motivo"
+              required
+              placeholder="Ej. Consulta general, vacunación..."
+              class="h-12
+                     w-full
+                     rounded-xl
+                     border
+                     border-slate-200
+                     bg-slate-50
+                     pl-11
+                     pr-4
+                     text-sm
+                     text-slate-900
+                     outline-none
+                     transition-all
+                     placeholder:text-slate-400
+                     focus:border-emerald-500
+                     focus:bg-white
+                     focus:ring-4
+                     focus:ring-emerald-500/10"
+            />
+
+          </div>
+        </div>
+
+
+        <!-- ESTADO -->
+        <div>
+
+          <label
+            for="estado"
+            class="mb-2
+                   block
+                   text-sm
+                   font-semibold
+                   text-slate-700"
+          >
+            Estado
+          </label>
+
+          <input
+            id="estado"
+            name="estado"
+            [(ngModel)]="atencion.estado"
+            required
+            placeholder="Ej. Completada"
+            class="h-12
+                   w-full
+                   rounded-xl
+                   border
+                   border-slate-200
+                   bg-slate-50
+                   px-4
+                   text-sm
+                   text-slate-900
+                   outline-none
+                   transition-all
+                   placeholder:text-slate-400
+                   focus:border-emerald-500
+                   focus:bg-white
+                   focus:ring-4
+                   focus:ring-emerald-500/10"
+          />
+
+        </div>
+
+
+        <!-- FECHA -->
+        <div>
+
+          <label
+            for="fecha"
+            class="mb-2
+                   block
+                   text-sm
+                   font-semibold
+                   text-slate-700"
+          >
+            Fecha
+          </label>
+
+          <input
+            id="fecha"
+            name="fecha"
+            type="date"
+            [(ngModel)]="atencion.fecha"
+            required
+            class="h-12
+                   w-full
+                   rounded-xl
+                   border
+                   border-slate-200
+                   bg-slate-50
+                   px-4
+                   text-sm
+                   text-slate-700
+                   outline-none
+                   transition-all
+                   focus:border-emerald-500
+                   focus:bg-white
+                   focus:ring-4
+                   focus:ring-emerald-500/10"
+          />
+
+        </div>
+
+
+        <!-- MASCOTA ID -->
+        <div>
+
+          <label
+            for="mascotaId"
+            class="mb-2
+                   block
+                   text-sm
+                   font-semibold
+                   text-slate-700"
+          >
+            Mascota ID
+          </label>
+
+          <input
+            id="mascotaId"
+            name="mascotaId"
+            type="number"
+            [(ngModel)]="atencion.mascotaId"
+            required
+            placeholder="ID de mascota"
+            class="h-12
+                   w-full
+                   rounded-xl
+                   border
+                   border-slate-200
+                   bg-slate-50
+                   px-4
+                   text-sm
+                   text-slate-900
+                   outline-none
+                   transition-all
+                   placeholder:text-slate-400
+                   focus:border-emerald-500
+                   focus:bg-white
+                   focus:ring-4
+                   focus:ring-emerald-500/10"
+          />
+
+        </div>
+
+
+        <!-- PERSONAL MÉDICO ID -->
+        <div>
+
+          <label
+            for="personalMedicoId"
+            class="mb-2
+                   block
+                   text-sm
+                   font-semibold
+                   text-slate-700"
+          >
+            Personal Médico ID
+          </label>
+
+          <input
+            id="personalMedicoId"
+            name="personalMedicoId"
+            type="number"
+            [(ngModel)]="atencion.personalMedicoId"
+            required
+            placeholder="ID del médico"
+            class="h-12
+                   w-full
+                   rounded-xl
+                   border
+                   border-slate-200
+                   bg-slate-50
+                   px-4
+                   text-sm
+                   text-slate-900
+                   outline-none
+                   transition-all
+                   placeholder:text-slate-400
+                   focus:border-emerald-500
+                   focus:bg-white
+                   focus:ring-4
+                   focus:ring-emerald-500/10"
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- ACTIONS -->
+      <div
+        class="mt-6
+               flex
+               flex-col-reverse
+               gap-3
+               border-t
+               border-slate-100
+               pt-5
+               sm:flex-row
+               sm:justify-end"
+      >
+
+        <button
+          type="button"
+          (click)="cancelar()"
+          class="inline-flex
+                 h-11
+                 items-center
+                 justify-center
+                 rounded-xl
+                 border
+                 border-slate-200
+                 bg-white
+                 px-5
+                 text-sm
+                 font-semibold
+                 text-slate-600
+                 transition-all
+                 hover:border-slate-300
+                 hover:bg-slate-50
+                 hover:text-slate-800"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          [disabled]="atencionForm.invalid"
+          class="inline-flex
+                 h-11
+                 items-center
+                 justify-center
+                 gap-2
+                 rounded-xl
+                 bg-emerald-600
+                 px-5
+                 text-sm
+                 font-semibold
+                 text-white
+                 shadow-lg
+                 shadow-emerald-600/20
+                 transition-all
+                 duration-200
+                 hover:bg-emerald-700
+                 active:bg-emerald-800
+                 disabled:cursor-not-allowed
+                 disabled:opacity-50"
+        >
+
+          @if (atencion.id) {
+            <svg
+              class="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M5 12h14m-6-6 6 6-6 6"
+              />
+            </svg>
+
+            Actualizar
+          } @else {
+            <svg
+              class="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 5v14M5 12h14"
+              />
+            </svg>
+
+            Guardar
+          }
+
+        </button>
+
+      </div>
+
     </div>
   </form>
 
-  <div class="table-responsive">
-    <table class="table table-striped align-middle">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Motivo</th>
-          <th>Estado</th>
-          <th>Fecha</th>
-          <th>Mascota</th>
-          <th>Personal Médico</th>
-          <th class="text-end">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of atenciones(); track item.id) {
-          <tr>
-            <td>{{ item.id }}</td>
-            <td>{{ item.motivo }}</td>
-            <td>{{ item.estado }}</td>
-            <td>{{ item.fecha }}</td>
-            <td>{{ item.mascotaId }}</td>
-            <td>{{ item.personalMedicoId }}</td>
-            <td class="text-end">
-              <button type="button" class="btn btn-sm btn-warning me-2" (click)="editar(item)">Editar</button>
-              <button type="button" class="btn btn-sm btn-danger" (click)="eliminar(item)">Eliminar</button>
-            </td>
+
+  <!-- ==========================================
+       LISTADO
+  =========================================== -->
+  <div
+    class="overflow-hidden
+           rounded-2xl
+           border
+           border-slate-200
+           bg-white
+           shadow-sm"
+  >
+
+    <!-- Table Header -->
+    <div
+      class="flex
+             flex-col
+             gap-3
+             border-b
+             border-slate-100
+             px-6
+             py-5
+             sm:flex-row
+             sm:items-center
+             sm:justify-between"
+    >
+
+      <div>
+        <h2
+          class="text-base
+                 font-bold
+                 text-slate-900"
+        >
+          Atenciones registradas
+        </h2>
+
+        <p class="mt-0.5 text-xs text-slate-400">
+          Historial de atenciones veterinarias.
+        </p>
+      </div>
+
+      <div
+        class="rounded-lg
+               bg-slate-50
+               px-3
+               py-1.5
+               text-xs
+               font-medium
+               text-slate-500"
+      >
+        Registros
+      </div>
+
+    </div>
+
+
+    <!-- Responsive Table -->
+    <div class="overflow-x-auto">
+
+      <table class="w-full min-w-[900px]">
+
+        <thead>
+          <tr
+            class="border-b
+                   border-slate-100
+                   bg-slate-50/70"
+          >
+
+            <th
+              class="px-6
+                     py-4
+                     text-left
+                     text-[10px]
+                     font-bold
+                     uppercase
+                     tracking-[0.14em]
+                     text-slate-400"
+            >
+              ID
+            </th>
+
+            <th
+              class="px-4
+                     py-4
+                     text-left
+                     text-[10px]
+                     font-bold
+                     uppercase
+                     tracking-[0.14em]
+                     text-slate-400"
+            >
+              Motivo
+            </th>
+
+            <th
+              class="px-4
+                     py-4
+                     text-left
+                     text-[10px]
+                     font-bold
+                     uppercase
+                     tracking-[0.14em]
+                     text-slate-400"
+            >
+              Estado
+            </th>
+
+            <th
+              class="px-4
+                     py-4
+                     text-left
+                     text-[10px]
+                     font-bold
+                     uppercase
+                     tracking-[0.14em]
+                     text-slate-400"
+            >
+              Fecha
+            </th>
+
+            <th
+              class="px-4
+                     py-4
+                     text-left
+                     text-[10px]
+                     font-bold
+                     uppercase
+                     tracking-[0.14em]
+                     text-slate-400"
+            >
+              Mascota
+            </th>
+
+            <th
+              class="px-4
+                     py-4
+                     text-left
+                     text-[10px]
+                     font-bold
+                     uppercase
+                     tracking-[0.14em]
+                     text-slate-400"
+            >
+              Personal Médico
+            </th>
+
+            <th
+              class="px-6
+                     py-4
+                     text-right
+                     text-[10px]
+                     font-bold
+                     uppercase
+                     tracking-[0.14em]
+                     text-slate-400"
+            >
+              Acciones
+            </th>
+
           </tr>
-        } @empty {
-          <tr>
-            <td colspan="7" class="py-4 text-center text-muted">
-              No hay atenciones registradas.
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+
+
+        <tbody class="divide-y divide-slate-100">
+
+          @for (item of atenciones(); track item.id) {
+
+            <tr
+              class="group
+                     transition-colors
+                     hover:bg-slate-50/70"
+            >
+
+              <!-- ID -->
+              <td class="px-6 py-4">
+
+                <span
+                  class="inline-flex
+                         h-8
+                         min-w-8
+                         items-center
+                         justify-center
+                         rounded-lg
+                         bg-slate-100
+                         px-2
+                         text-xs
+                         font-bold
+                         text-slate-600"
+                >
+                  {{ item.id }}
+                </span>
+
+              </td>
+
+
+              <!-- MOTIVO -->
+              <td class="px-4 py-4">
+
+                <p
+                  class="max-w-[220px]
+                         truncate
+                         text-sm
+                         font-semibold
+                         text-slate-700"
+                >
+                  {{ item.motivo }}
+                </p>
+
+              </td>
+
+
+              <!-- ESTADO -->
+              <td class="px-4 py-4">
+
+                <span
+                  class="inline-flex
+                         items-center
+                         gap-1.5
+                         rounded-full
+                         bg-emerald-50
+                         px-2.5
+                         py-1
+                         text-[11px]
+                         font-bold
+                         text-emerald-700"
+                >
+                  <span
+                    class="h-1.5
+                           w-1.5
+                           rounded-full
+                           bg-emerald-500"
+                  ></span>
+
+                  {{ item.estado }}
+                </span>
+
+              </td>
+
+
+              <!-- FECHA -->
+              <td class="px-4 py-4">
+
+                <div class="flex items-center gap-2">
+
+                  <svg
+                    class="h-4 w-4 text-slate-400"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    viewBox="0 0 24 24"
+                  >
+                    <rect
+                      x="3"
+                      y="4"
+                      width="18"
+                      height="17"
+                      rx="2"
+                    />
+
+                    <path
+                      stroke-linecap="round"
+                      d="M16 2v4M8 2v4M3 10h18"
+                    />
+                  </svg>
+
+                  <span class="text-sm text-slate-600">
+                    {{ item.fecha }}
+                  </span>
+
+                </div>
+
+              </td>
+
+
+              <!-- MASCOTA -->
+              <td class="px-4 py-4">
+
+                <div class="flex items-center gap-2">
+
+                  <div
+                    class="flex
+                           h-8
+                           w-8
+                           items-center
+                           justify-center
+                           rounded-lg
+                           bg-emerald-50
+                           text-emerald-600"
+                  >
+                    <svg
+                      class="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle cx="7" cy="8" r="1.5" />
+                      <circle cx="11" cy="6" r="1.5" />
+                      <circle cx="16" cy="6" r="1.5" />
+                      <circle cx="19" cy="9" r="1.5" />
+
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8 13.5
+                           c-1.5 0-3 1.2-3 3
+                           0 1.5 1 2.5 2.5 2.5
+                           1.2 0 2-.7 2.5-1.5
+                           .5-.8 1.5-.8 2 0
+                           .5.8 1.3 1.5 2.5 1.5
+                           1.5 0 2.5-1 2.5-2.5
+                           0-1.8-1.5-3-3-3
+                           -1.2 0-1.7-.5-2-1.5
+                           -.3 1-.8 1.5-2 1.5Z"
+                      />
+                    </svg>
+                  </div>
+
+                  <span
+                    class="text-sm
+                           font-medium
+                           text-slate-600"
+                  >
+                    #{{ item.mascotaId }}
+                  </span>
+
+                </div>
+
+              </td>
+
+
+              <!-- PERSONAL MÉDICO -->
+              <td class="px-4 py-4">
+
+                <div class="flex items-center gap-2">
+
+                  <div
+                    class="flex
+                           h-8
+                           w-8
+                           items-center
+                           justify-center
+                           rounded-full
+                           bg-slate-100
+                           text-xs
+                           font-bold
+                           text-slate-500"
+                  >
+                    M
+                  </div>
+
+                  <span
+                    class="text-sm
+                           font-medium
+                           text-slate-600"
+                  >
+                    #{{ item.personalMedicoId }}
+                  </span>
+
+                </div>
+
+              </td>
+
+
+              <!-- ACCIONES -->
+              <td class="px-6 py-4">
+
+                <div class="flex justify-end gap-2">
+
+                  <!-- EDITAR -->
+                  <button
+                    type="button"
+                    (click)="editar(item)"
+                    title="Editar"
+                    class="flex
+                           h-9
+                           w-9
+                           items-center
+                           justify-center
+                           rounded-lg
+                           border
+                           border-slate-200
+                           bg-white
+                           text-slate-400
+                           transition-all
+                           hover:border-amber-200
+                           hover:bg-amber-50
+                           hover:text-amber-600"
+                  >
+                    <svg
+                      class="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 20h9"
+                      />
+
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M16.5 3.5
+                           a2.121 2.121 0 0 1 3 3L8 18
+                           l-4 1 1-4Z"
+                      />
+                    </svg>
+                  </button>
+
+
+                  <!-- ELIMINAR -->
+                  <button
+                    type="button"
+                    (click)="eliminar(item)"
+                    title="Eliminar"
+                    class="flex
+                           h-9
+                           w-9
+                           items-center
+                           justify-center
+                           rounded-lg
+                           border
+                           border-slate-200
+                           bg-white
+                           text-slate-400
+                           transition-all
+                           hover:border-red-200
+                           hover:bg-red-50
+                           hover:text-red-600"
+                  >
+                    <svg
+                      class="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3 6h18"
+                      />
+
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8 6V4
+                           a1 1 0 0 1 1-1h6
+                           a1 1 0 0 1 1 1v2"
+                      />
+
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m19 6-1 15H6L5 6"
+                      />
+
+                      <path
+                        stroke-linecap="round"
+                        d="M10 11v6M14 11v6"
+                      />
+                    </svg>
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          } @empty {
+
+            <!-- EMPTY STATE -->
+            <tr>
+
+              <td
+                colspan="7"
+                class="px-6 py-16 text-center"
+              >
+
+                <div
+                  class="mx-auto
+                         flex
+                         h-14
+                         w-14
+                         items-center
+                         justify-center
+                         rounded-2xl
+                         bg-slate-100
+                         text-slate-400"
+                >
+                  <svg
+                    class="h-7 w-7"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 3h9l4 4v14H6
+                         a2 2 0 0 1-2-2V5
+                         a2 2 0 0 1 2-2Z"
+                    />
+
+                    <path
+                      stroke-linecap="round"
+                      d="M14 3v5h5M8 12h8M8 16h5"
+                    />
+                  </svg>
+                </div>
+
+                <h3
+                  class="mt-4
+                         text-sm
+                         font-bold
+                         text-slate-700"
+                >
+                  No hay atenciones registradas
+                </h3>
+
+                <p
+                  class="mt-1
+                         text-xs
+                         text-slate-400"
+                >
+                  Las atenciones que registres aparecerán aquí.
+                </p>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
   </div>
+
 </div>

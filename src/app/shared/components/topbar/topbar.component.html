@@ -1,0 +1,299 @@
+<header class="
+         top-0
+         right-0
+         z-30
+         h-[76px]
+         border-b
+         border-slate-200
+         bg-white/95
+         backdrop-blur-sm
+         transition-all
+         duration-300">
+
+    <div class="flex
+           h-full
+           items-center
+           justify-between
+           px-6
+           lg:px-8">
+
+        <!-- =====================================================
+         LEFT
+    ====================================================== -->
+
+        <div class="flex items-center gap-4">
+
+            <!-- Mobile menu -->
+            <button type="button" class="flex
+               h-10
+               w-10
+               items-center
+               justify-center
+               rounded-xl
+               text-slate-500
+               transition-all
+               hover:bg-slate-50
+               hover:text-slate-900
+               ">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+
+            </button>
+
+            <!-- Search -->
+
+            <div class="relative
+         flex
+         h-10
+         w-full
+         max-w-[280px]
+         items-center
+         rounded-xl
+         border
+         border-slate-200
+         bg-slate-50
+         transition-all
+         duration-200
+         focus-within:border-emerald-300
+         focus-within:bg-white
+         focus-within:ring-4
+         focus-within:ring-emerald-500/10">
+
+                <!-- Icono -->
+                <div class="pointer-events-none
+           absolute
+           left-3
+           flex
+           items-center
+           justify-center">
+                    <svg class="h-[18px]
+             w-[18px]
+             text-slate-400
+             transition-colors" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="7" />
+
+                        <path stroke-linecap="round" d="m20 20-4-4" />
+                    </svg>
+                </div>
+
+
+                <!-- Input -->
+                <input type="search" name="search" placeholder="Buscar..." autocomplete="off" class="h-full
+           w-full
+           rounded-xl
+           bg-transparent
+           pl-10
+           pr-14
+           text-xs
+           font-medium
+           text-slate-700
+           placeholder:text-slate-400
+           outline-none" />
+
+
+                <!-- Atajo -->
+                <kbd class="pointer-events-none
+           absolute
+           right-2.5
+           hidden
+           rounded-md
+           border
+           border-slate-200
+           bg-white
+           px-1.5
+           py-0.5
+           text-[9px]
+           font-medium
+           text-slate-400
+           shadow-sm
+           md:block">
+                    ⌘ K
+                </kbd>
+
+            </div>
+
+
+
+        </div>
+
+
+        <!-- =====================================================
+         RIGHT
+    ====================================================== -->
+
+        <div class="flex items-center gap-2">
+
+
+
+
+
+            <!-- Divider -->
+
+            <div class="mx-2
+               hidden
+               h-7
+               w-px
+               bg-slate-200
+               sm:block"></div>
+
+
+            <!-- Notifications -->
+
+            <button type="button" class="group
+               relative
+               flex
+               h-10
+               w-10
+               items-center
+               justify-center
+               rounded-xl
+               text-slate-500
+               transition-all
+               duration-200
+               hover:bg-emerald-50
+               hover:text-emerald-600">
+
+                <svg class="h-[19px] w-[19px]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082
+               a23.848 23.848 0 0 0 5.454-1.31
+               A8.967 8.967 0 0 1 18 9.75
+               V9
+               a6 6 0 0 0-12 0
+               v.75
+               a8.967 8.967 0 0 1-2.312 6.022
+               c1.733.64 3.56 1.085 5.455 1.31
+               m5.714 0
+               a24.255 24.255 0 0 1-5.714 0
+               m5.714 0
+               a3 3 0 1 1-5.714 0" />
+                </svg>
+
+
+                <!-- Notification badge -->
+
+                <span class="absolute
+                 right-2
+                 top-2
+                 h-2
+                 w-2
+                 rounded-full
+                 bg-emerald-500
+                 ring-2
+                 ring-white"></span>
+
+            </button>
+
+
+            <!-- Help -->
+
+            <button type="button" class="hidden
+               h-10
+               w-10
+               items-center
+               justify-center
+               rounded-xl
+               text-slate-500
+               transition-all
+               duration-200
+               hover:bg-slate-50
+               hover:text-slate-900
+               md:flex">
+
+                <svg class="h-[19px] w-[19px]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+
+                    <path stroke-linecap="round" d="M9.75 9
+               a2.25 2.25 0 1 1 3.65 1.76
+               c-.78.6-1.4 1.08-1.4 2.24" />
+
+                    <path stroke-linecap="round" d="M12 16.5h.01" />
+                </svg>
+
+            </button>
+
+
+            <!-- Divider -->
+
+            <div class="mx-2
+               h-7
+               w-px
+               bg-slate-200"></div>
+
+
+            <!-- =================================================
+           USER
+      ================================================== -->
+
+            <button type="button" class="group
+               flex
+               items-center
+               gap-3
+               rounded-xl
+               p-1.5
+               pr-2.5
+               transition-all
+               duration-200
+               hover:bg-slate-50">
+
+                <!-- Avatar -->
+
+                <div class="flex
+                 h-9
+                 w-9
+                 shrink-0
+                 items-center
+                 justify-center
+                 rounded-xl
+                 bg-emerald-50
+                 text-xs
+                 font-bold
+                 text-emerald-700
+                 ring-1
+                 ring-emerald-100">
+                    SP
+                </div>
+
+
+                <!-- User information -->
+
+                <div class="hidden
+                 text-left
+                 sm:block">
+
+                    <p class="max-w-[130px]
+                   truncate
+                   text-xs
+                   font-semibold
+                   text-slate-800">
+                        Administrador
+                    </p>
+
+                    <p class="text-[10px]
+                   text-slate-400">
+                        Administrador
+                    </p>
+
+                </div>
+
+
+                <!-- Chevron -->
+
+                <svg class="hidden
+                 h-4
+                 w-4
+                 text-slate-400
+                 transition-transform
+                 duration-200
+                 group-hover:text-slate-600
+                 sm:block" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+                </svg>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</header>

@@ -1,1 +1,691 @@
-<p>sidebar works!</p>
+<aside class="
+         left-0
+         top-0
+         z-40
+         h-screen
+         w-[270px]
+         border-r
+         border-slate-200
+         bg-white
+         transition-all
+         duration-300
+         ease-in-out" [class.w-[82px]]="collapsed()">
+
+    <!-- =====================================================
+       HEADER / LOGO
+  ====================================================== -->
+
+    <div class="flex
+           h-[76px]
+           items-center
+           border-b
+           border-slate-100
+           px-5" [class.justify-center]="collapsed()">
+
+        <a routerLink="/dashboard" class="flex
+             items-center
+             gap-3
+             min-w-0">
+
+            <!-- Logo -->
+            <div class="flex
+               h-10
+               w-10
+               shrink-0
+               items-center
+               justify-center
+               rounded-xl
+               bg-emerald-600
+               text-white
+               shadow-lg
+               shadow-emerald-600/20">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21
+               c-4.5-3.5-8-7.2-8-11
+               a4.5 4.5 0 0 1 8-2.7
+               A4.5 4.5 0 0 1 20 10
+               c0 3.8-3.5 7.5-8 11Z" />
+                </svg>
+            </div>
+
+            <!-- Brand -->
+            @if (!collapsed()) {
+
+            <div class="min-w-0">
+
+                <h1 class="truncate
+                   text-[15px]
+                   font-bold
+                   tracking-tight
+                   text-slate-900">
+                    VetCare
+                </h1>
+
+                <p class="truncate
+                   text-[10px]
+                   font-semibold
+                   tracking-[0.16em]
+                   text-slate-400">
+                    GESTIÓN VETERINARIA
+                </p>
+
+            </div>
+
+            }
+
+        </a>
+
+    </div>
+    <!-- =====================================================
+       NAVIGATION
+  ====================================================== -->
+
+    <nav class="h-[calc(100vh-150px)]
+           overflow-y-auto
+           px-3
+           py-5
+           scrollbar-thin">
+
+        <!-- ================= PRINCIPAL ================= -->
+
+        @if (!collapsed()) {
+
+        <p class="mb-3
+               px-3
+               text-[10px]
+               font-bold
+               uppercase
+               tracking-[0.18em]
+               text-slate-400">
+            Principal
+        </p>
+
+        }
+
+
+        <!-- DASHBOARD -->
+
+        <a routerLink="/dashboard" routerLinkActive="bg-emerald-50 text-emerald-700"
+            [routerLinkActiveOptions]="{ exact: true }" class="group
+             relative
+             flex
+             h-11
+             items-center
+             gap-3
+             rounded-xl
+             px-3
+             text-sm
+             font-medium
+             text-slate-500
+             transition-all
+             duration-200
+             hover:bg-slate-50
+             hover:text-slate-900" [class.justify-center]="collapsed()">
+
+            <svg class="h-[19px]
+               w-[19px]
+               shrink-0
+               transition-colors
+               group-hover:text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="3" width="7" height="7" rx="1" />
+                <rect x="3" y="14" width="7" height="7" rx="1" />
+                <rect x="14" y="14" width="7" height="7" rx="1" />
+            </svg>
+
+            @if (!collapsed()) {
+
+            <span>
+                Dashboard
+            </span>
+
+            }
+
+        </a>
+
+
+        <!-- ================= ATENCIÓN ================= -->
+
+        @if (!collapsed()) {
+
+        <p class="mb-3
+               mt-7
+               px-3
+               text-[10px]
+               font-bold
+               uppercase
+               tracking-[0.18em]
+               text-slate-400">
+            Atención
+        </p>
+
+        }
+
+
+        <!-- CITAS -->
+
+        <a routerLink="/dashboard/atenciones" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
+             relative
+             flex
+             h-11
+             items-center
+             gap-3
+             rounded-xl
+             px-3
+             text-sm
+             font-medium
+             text-slate-500
+             transition-all
+             duration-200
+             hover:bg-slate-50
+             hover:text-slate-900" [class.justify-center]="collapsed()">
+
+            <svg class="h-[19px]
+               w-[19px]
+               shrink-0
+               transition-colors
+               group-hover:text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="17" rx="2" />
+                <path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18" />
+                <path stroke-linecap="round" d="M8 14h.01M12 14h.01M16 14h.01" />
+            </svg>
+
+            @if (!collapsed()) {
+
+            <span class="flex-1">
+                Citas
+            </span>
+
+            <span class="rounded-full
+                 bg-emerald-600
+                 px-2
+                 py-0.5
+                 text-[10px]
+                 font-bold
+                 text-white
+                 shadow-sm
+                 shadow-emerald-600/20">
+                5
+            </span>
+
+            }
+
+        </a>
+
+
+        <!-- MASCOTAS -->
+
+        <a routerLink="/mascotas" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
+             relative
+             flex
+             h-11
+             items-center
+             gap-3
+             rounded-xl
+             px-3
+             text-sm
+             font-medium
+             text-slate-500
+             transition-all
+             duration-200
+             hover:bg-slate-50
+             hover:text-slate-900" [class.justify-center]="collapsed()">
+
+            <svg class="h-[19px]
+               w-[19px]
+               shrink-0
+               transition-colors
+               group-hover:text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 13.5
+             c-1.5 0-3 1.2-3 3
+             0 1.5 1 2.5 2.5 2.5
+             1.2 0 2-.7 2.5-1.5
+             .5-.8 1.5-.8 2 0
+             .5.8 1.3 1.5 2.5 1.5
+             1.5 0 2.5-1 2.5-2.5
+             0-1.8-1.5-3-3-3
+             -1.2 0-1.7-.5-2-1.5
+             -.3 1-.8 1.5-2 1.5Z" />
+                <circle cx="7" cy="8" r="1.5" />
+                <circle cx="11" cy="6" r="1.5" />
+                <circle cx="16" cy="6" r="1.5" />
+                <circle cx="19" cy="9" r="1.5" />
+            </svg>
+
+            @if (!collapsed()) {
+
+            <span>
+                Mascotas
+            </span>
+
+            }
+
+        </a>
+
+
+        <!-- PROPIETARIOS -->
+
+        <a routerLink="/propietarios" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
+             relative
+             flex
+             h-11
+             items-center
+             gap-3
+             rounded-xl
+             px-3
+             text-sm
+             font-medium
+             text-slate-500
+             transition-all
+             duration-200
+             hover:bg-slate-50
+             hover:text-slate-900" [class.justify-center]="collapsed()">
+
+            <svg class="h-[19px]
+               w-[19px]
+               shrink-0
+               group-hover:text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <circle cx="9" cy="8" r="3" />
+                <path stroke-linecap="round" d="M3 21a6 6 0 0 1 12 0" />
+                <path stroke-linecap="round" d="M16 4a3 3 0 0 1 0 6" />
+                <path stroke-linecap="round" d="M18 13a5 5 0 0 1 3 4.5" />
+            </svg>
+
+            @if (!collapsed()) {
+
+            <span>
+                Propietarios
+            </span>
+
+            }
+
+        </a>
+
+
+        <!-- HISTORIAS CLÍNICAS -->
+
+        <a routerLink="/historias-clinicas" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
+             relative
+             flex
+             h-11
+             items-center
+             gap-3
+             rounded-xl
+             px-3
+             text-sm
+             font-medium
+             text-slate-500
+             transition-all
+             duration-200
+             hover:bg-slate-50
+             hover:text-slate-900" [class.justify-center]="collapsed()">
+
+            <svg class="h-[19px]
+               w-[19px]
+               shrink-0
+               group-hover:text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 3h9l4 4v14H6
+             a2 2 0 0 1-2-2V5
+             a2 2 0 0 1 2-2Z" />
+                <path stroke-linecap="round" d="M14 3v5h5" />
+                <path stroke-linecap="round" d="M8 12h8M8 16h6" />
+            </svg>
+
+            @if (!collapsed()) {
+
+            <span>
+                Historias clínicas
+            </span>
+
+            }
+
+        </a>
+
+
+        <!-- ================= GESTIÓN ================= -->
+
+        @if (!collapsed()) {
+
+        <p class="mb-3
+               mt-7
+               px-3
+               text-[10px]
+               font-bold
+               uppercase
+               tracking-[0.18em]
+               text-slate-400">
+            Gestión
+        </p>
+
+        }
+
+
+        <!-- SERVICIOS -->
+
+        <a routerLink="/servicios" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
+             relative
+             flex
+             h-11
+             items-center
+             gap-3
+             rounded-xl
+             px-3
+             text-sm
+             font-medium
+             text-slate-500
+             transition-all
+             duration-200
+             hover:bg-slate-50
+             hover:text-slate-900" [class.justify-center]="collapsed()">
+
+            <svg class="h-[19px]
+               w-[19px]
+               shrink-0
+               group-hover:text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3
+             17.7 3.3
+             a4 4 0 0 1 3 5.7
+             l-4 4
+             -3-3 4-4Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="m13 11-8.5 8.5
+             a2.1 2.1 0 0 0 3 3L16 14" />
+            </svg>
+
+            @if (!collapsed()) {
+
+            <span>
+                Servicios
+            </span>
+
+            }
+
+        </a>
+
+
+        <!-- INVENTARIO -->
+
+        <a routerLink="/inventario" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
+             relative
+             flex
+             h-11
+             items-center
+             gap-3
+             rounded-xl
+             px-3
+             text-sm
+             font-medium
+             text-slate-500
+             transition-all
+             duration-200
+             hover:bg-slate-50
+             hover:text-slate-900" [class.justify-center]="collapsed()">
+
+            <svg class="h-[19px]
+               w-[19px]
+               shrink-0
+               group-hover:text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linejoin="round" d="M4 7
+             12 3
+             20 7
+             12 11
+             4 7Z" />
+                <path stroke-linejoin="round" d="M4 12
+             12 16
+             20 12" />
+                <path stroke-linejoin="round" d="M4 17
+             12 21
+             20 17" />
+            </svg>
+
+            @if (!collapsed()) {
+
+            <span class="flex-1">
+                Inventario
+            </span>
+
+            <span class="h-2
+                 w-2
+                 rounded-full
+                 bg-amber-400"></span>
+
+            }
+
+        </a>
+
+
+        <!-- VENTAS -->
+
+        <a routerLink="/ventas" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
+             relative
+             flex
+             h-11
+             items-center
+             gap-3
+             rounded-xl
+             px-3
+             text-sm
+             font-medium
+             text-slate-500
+             transition-all
+             duration-200
+             hover:bg-slate-50
+             hover:text-slate-900" [class.justify-center]="collapsed()">
+
+            <svg class="h-[19px]
+               w-[19px]
+               shrink-0
+               group-hover:text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 19V5
+             a2 2 0 0 1 2-2h12
+             a2 2 0 0 1 2 2v14" />
+                <path stroke-linecap="round" d="M8 17h8" />
+                <path stroke-linecap="round" d="M8 7h8M8 11h5" />
+            </svg>
+
+            @if (!collapsed()) {
+
+            <span>
+                Ventas
+            </span>
+
+            }
+
+        </a>
+
+
+        <!-- REPORTES -->
+
+        <a routerLink="/reportes" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
+             relative
+             flex
+             h-11
+             items-center
+             gap-3
+             rounded-xl
+             px-3
+             text-sm
+             font-medium
+             text-slate-500
+             transition-all
+             duration-200
+             hover:bg-slate-50
+             hover:text-slate-900" [class.justify-center]="collapsed()">
+
+            <svg class="h-[19px]
+               w-[19px]
+               shrink-0
+               group-hover:text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 19V5" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 17
+             9 12
+             13 15
+             20 7" />
+                <path stroke-linecap="round" d="M16 7h4v4" />
+            </svg>
+
+            @if (!collapsed()) {
+
+            <span>
+                Reportes
+            </span>
+
+            }
+
+        </a>
+
+
+        <!-- ================= SISTEMA ================= -->
+
+        @if (!collapsed()) {
+
+        <p class="mb-3
+               mt-7
+               px-3
+               text-[10px]
+               font-bold
+               uppercase
+               tracking-[0.18em]
+               text-slate-400">
+            Sistema
+        </p>
+
+        }
+
+
+        <!-- USUARIOS -->
+
+        <a routerLink="/usuarios" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
+             relative
+             flex
+             h-11
+             items-center
+             gap-3
+             rounded-xl
+             px-3
+             text-sm
+             font-medium
+             text-slate-500
+             transition-all
+             duration-200
+             hover:bg-slate-50
+             hover:text-slate-900" [class.justify-center]="collapsed()">
+
+            <svg class="h-[19px]
+               w-[19px]
+               shrink-0
+               group-hover:text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <circle cx="9" cy="8" r="3" />
+                <path stroke-linecap="round" d="M3 21a6 6 0 0 1 12 0" />
+                <path stroke-linecap="round" d="M16 11a3 3 0 1 0 0-6" />
+                <path stroke-linecap="round" d="M18 13a5 5 0 0 1 3 4.5" />
+            </svg>
+
+            @if (!collapsed()) {
+
+            <span>
+                Usuarios
+            </span>
+
+            }
+
+        </a>
+
+
+        <!-- CONFIGURACIÓN -->
+
+        <a routerLink="/configuracion" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
+             relative
+             flex
+             h-11
+             items-center
+             gap-3
+             rounded-xl
+             px-3
+             text-sm
+             font-medium
+             text-slate-500
+             transition-all
+             duration-200
+             hover:bg-slate-50
+             hover:text-slate-900" [class.justify-center]="collapsed()">
+
+            <svg class="h-[19px]
+               w-[19px]
+               shrink-0
+               group-hover:text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15.5
+             a3.5 3.5 0 1 0 0-7
+             3.5 3.5 0 0 0 0 7Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.4 15
+             1.5 1.2-1.8 3.1-1.8-.7
+             a7.7 7.7 0 0 1-2.1 1.2
+             l-.3 1.9H11l-.3-1.9
+             a7.7 7.7 0 0 1-2.1-1.2
+             l-1.8.7-1.8-3.1L6.6 15
+             a7.7 7.7 0 0 1 0-2.4
+             L5 11.4l1.8-3.1 1.8.7
+             a7.7 7.7 0 0 1 2.1-1.2L11 5.9h3.9l.3 1.9
+             a7.7 7.7 0 0 1 2.1 1.2l1.8-.7 1.8 3.1
+             -1.5 1.2a7.7 7.7 0 0 1 0 2.4Z" />
+            </svg>
+
+            @if (!collapsed()) {
+
+            <span>
+                Configuración
+            </span>
+
+            }
+
+        </a>
+
+        <!-- LOGOUT -->
+
+        <button type="button" class="group
+             mt-1
+             flex
+             h-10
+             w-full
+             items-center
+             gap-3
+             rounded-xl
+             px-3
+             text-sm
+             font-medium
+             text-slate-500
+             transition-all
+             duration-200
+             hover:bg-red-50
+             hover:text-red-600" [class.justify-center]="collapsed()">
+
+            <svg class="h-5
+               w-5
+               shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 17l5-5-5-5" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H3" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 4h5
+             a2 2 0 0 1 2 2v12
+             a2 2 0 0 1-2 2h-5" />
+            </svg>
+
+            @if (!collapsed()) {
+
+            <span>
+                Cerrar sesión
+            </span>
+
+            }
+
+        </button>
+
+    </nav>
+
+
+    <!-- =====================================================
+       BOTTOM
+  ====================================================== -->
+
+
+
+
+</aside>

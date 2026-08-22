@@ -1,60 +1,34 @@
 import { Routes } from '@angular/router';
-import { Animales } from './animales/animales';
-import { Atenciones } from './atencion/atencion';
-import { Clientes } from './clientes/clientes';
-import { HistorialesClinicos } from './historiales-clinicos/historiales-clinicos';
-import { Mascotas } from './mascotas/mascotas';
-import { PersonalMedicoo } from './personal-medico/personal-medico';
-import { Servicios } from './servicios/servicios';
-import { Usuarios } from './usuarios/usuarios';
-
+import { LoginComponent } from './auth/login/login.component';
+import path from 'path';
 
 export const routes: Routes = [
-   
     {
-    path: 'animales',
-    component: Animales
-  },
-  
+        path:'auth/login',
+        component:LoginComponent,
+    },
     {
-    path: 'atencion',
-    component: Atenciones
-  },
-
-  {
-    path: 'clientes',
-    component: Clientes
-  },
-  {
-    path: 'historiales-clinicos',
-    component: HistorialesClinicos
-  },
-  {
-    path: 'mascotas',
-    component: Mascotas
-  },
-  {
-    path: 'personal-medico',
-    component: PersonalMedicoo
-  },
-  {
-    path: 'servicios',
-    component: Servicios
-  },
-  {
-    path: 'usuarios',
-    component: Usuarios
-  },
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
-    path: '**',
-    redirectTo: 'login'
-  }
-
+      path:'dashboard',
+      loadComponent:()=> import('./layout/main-layout/main-layout.component').then((m)=>m.MainLayoutComponent),
+      children:[
+        {
+          path:'',
+          loadComponent:()=>import('./dashboard/dashboard').then((m)=>m.Dashboard)
+        },
+        {
+          path:'atenciones',
+          loadComponent:()=>import('./atencion/atencion').then((m)=>m.Atenciones),
+        }
+      ] 
+    },
+    {
+      path:'',
+      redirectTo:'auth/login',
+      pathMatch:'full'
+    },
+    {
+        path:'**',
+        redirectTo:'auth/login',
+        pathMatch:'full',
+    }
 ];
-
-
