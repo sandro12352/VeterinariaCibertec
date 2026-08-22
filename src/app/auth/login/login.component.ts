@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
@@ -15,10 +15,11 @@ export class LoginComponent {
 
   usuario = '';
   password = '';
+  messageError = signal('');
 
   rememberMe = false;
   showPassword = false;
-  loading = false;
+  loading = signal(false);
 
   login(): void {
 
@@ -26,13 +27,17 @@ export class LoginComponent {
       return;
     }
 
-    this.loading = true;
+    this.loading.set(true) ;
 
 
     this.AuthService.login(this.usuario,this.password).subscribe({
       next:(res)=>{
-        this.loading = false;
+        this.loading.set(false);
         this.router.navigate(['/dashboard']);
+      },
+      error:(error)=>{
+        this.messageError.set(error.error.message);
+        this.loading.set(false);
       }
     })
 
