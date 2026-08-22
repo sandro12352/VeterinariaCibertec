@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +10,10 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  email = '';
+  private readonly AuthService = inject(AuthService);
+  protected readonly router = inject(Router);
+
+  usuario = '';
   password = '';
 
   rememberMe = false;
@@ -17,21 +22,20 @@ export class LoginComponent {
 
   login(): void {
 
-    if (!this.email || !this.password) {
+    if (!this.usuario || !this.password) {
       return;
     }
 
     this.loading = true;
 
-    // Aquí irá tu AuthService
-    console.log({
-      email: this.email,
-      password: this.password,
-      rememberMe: this.rememberMe
-    });
 
-    setTimeout(() => {
-      this.loading = false;
-    }, 1500);
+    this.AuthService.login(this.usuario,this.password).subscribe({
+      next:(res)=>{
+        this.loading = false;
+        this.router.navigate(['/dashboard']);
+      }
+    })
+
+
   }
 }

@@ -1,1 +1,738 @@
-<p>usuarios works!</p>
+<div class="min-h-screen bg-slate-50 px-6 py-6 lg:px-8">
+
+    <!-- =========================================================
+       HEADER
+  ========================================================== -->
+    <div class="mb-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+
+        <div>
+            <div class="mb-2 flex items-center gap-2">
+                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+
+                <span class="text-xs font-bold tracking-[0.18em] text-emerald-600">
+                    ADMINISTRACIÓN
+                </span>
+            </div>
+
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900 lg:text-3xl">
+                Usuarios
+            </h1>
+
+            <p class="mt-1 text-sm text-slate-500">
+                Gestiona los usuarios y permisos de acceso a VetCare.
+            </p>
+        </div>
+
+        <!-- NUEVO USUARIO -->
+        <button type="button" (click)="abrirModalCrear()" class="group inline-flex h-11 items-center justify-center gap-2
+             rounded-xl bg-emerald-600 px-5
+             text-sm font-semibold text-white
+             shadow-lg shadow-emerald-600/20
+             transition-all duration-200
+             hover:bg-emerald-700
+             active:bg-emerald-800">
+            <svg class="h-4 w-4 transition-transform duration-200 group-hover:rotate-90" fill="none"
+                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14" />
+            </svg>
+
+            Nuevo usuario
+        </button>
+
+    </div>
+
+
+    <!-- =========================================================
+       MÉTRICAS
+  ========================================================== -->
+    <div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+        <!-- TOTAL -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-5
+             shadow-sm transition-all duration-200
+             hover:-translate-y-0.5 hover:shadow-md">
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                        Total usuarios
+                    </p>
+
+                    <p class="mt-2 text-2xl font-bold text-slate-900">
+                        {{ usuarios().length }}
+                    </p>
+
+                    <p class="mt-1 text-xs text-slate-400">
+                        Usuarios registrados
+                    </p>
+                </div>
+
+                <div class="flex h-11 w-11 items-center justify-center
+                 rounded-xl bg-emerald-50 text-emerald-600">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6.75a3.75 3.75 0 1 1-7.5 0
+                 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25
+                 a7.5 7.5 0 0 1 15 0" />
+                    </svg>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ACTIVOS -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-5
+             shadow-sm transition-all duration-200
+             hover:-translate-y-0.5 hover:shadow-md">
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                        Usuarios activos
+                    </p>
+
+                    <p class="mt-2 text-2xl font-bold text-slate-900">
+                        {{ usuariosActivos() }}
+                    </p>
+
+                    <p class="mt-1 text-xs text-emerald-600">
+                        Acceso habilitado
+                    </p>
+                </div>
+
+                <div class="flex h-11 w-11 items-center justify-center
+                 rounded-xl bg-emerald-50 text-emerald-600">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75
+                 M21 12a9 9 0 1 1-18 0
+                 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- INACTIVOS -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-5
+             shadow-sm transition-all duration-200
+             hover:-translate-y-0.5 hover:shadow-md">
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                        Inactivos
+                    </p>
+
+                    <p class="mt-2 text-2xl font-bold text-slate-900">
+                        {{ usuariosInactivos() }}
+                    </p>
+
+                    <p class="mt-1 text-xs text-slate-400">
+                        Acceso restringido
+                    </p>
+                </div>
+
+                <div class="flex h-11 w-11 items-center justify-center
+                 rounded-xl bg-slate-100 text-slate-500">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364
+                 A9 9 0 1 1 5.636 5.636
+                 M5.636 5.636l12.728 12.728" />
+                    </svg>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ADMINISTRADORES -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-5
+             shadow-sm transition-all duration-200
+             hover:-translate-y-0.5 hover:shadow-md">
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                        Administradores
+                    </p>
+
+                    <p class="mt-2 text-2xl font-bold text-slate-900">
+                        {{ administradores() }}
+                    </p>
+
+                    <p class="mt-1 text-xs text-slate-400">
+                        Con permisos elevados
+                    </p>
+                </div>
+
+                <div class="flex h-11 w-11 items-center justify-center
+                 rounded-xl bg-teal-50 text-teal-600">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3 4.5 6.75v5.625
+                 c0 4.5 3.15 7.875 7.5 8.625
+                 4.35-.75 7.5-4.125 7.5-8.625V6.75L12 3Z" />
+
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m9 12 2 2 4-4" />
+                    </svg>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+       CONTENEDOR PRINCIPAL
+  ========================================================== -->
+    <div class="overflow-hidden rounded-2xl border border-slate-200
+           bg-white shadow-sm">
+
+        <!-- =======================================================
+         TOOLBAR
+    ======================================================== -->
+        <div class="flex flex-col gap-4 border-b border-slate-100
+             p-5 lg:flex-row lg:items-center lg:justify-between">
+
+            <!-- SEARCH -->
+            <div class="relative w-full lg:max-w-md">
+
+                <div class="pointer-events-none absolute inset-y-0 left-0
+                 flex items-center pl-4">
+                    <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35
+                 m1.35-5.4a6.75 6.75 0 1 1-13.5 0
+                 6.75 6.75 0 0 1 13.5 0Z" />
+                    </svg>
+                </div>
+
+                <input type="text" [(ngModel)]="busqueda" placeholder="Buscar usuario..." class="h-11 w-full rounded-xl border border-slate-200
+                 bg-slate-50 pl-11 pr-4
+                 text-sm text-slate-900
+                 outline-none
+                 transition-all
+                 placeholder:text-slate-400
+                 focus:border-emerald-500
+                 focus:bg-white
+                 focus:ring-4
+                 focus:ring-emerald-500/10" />
+
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="flex flex-wrap gap-3">
+
+                <select [(ngModel)]="filtroRol" class="h-11 rounded-xl border border-slate-200
+                 bg-slate-50 px-4
+                 text-sm text-slate-600
+                 outline-none
+                 transition-all
+                 focus:border-emerald-500
+                 focus:ring-4
+                 focus:ring-emerald-500/10">
+                    <option value="">Todos los roles</option>
+                    <option value="ADMIN">Administrador</option>
+                    <option value="VETERINARIO">Veterinario</option>
+                    <option value="RECEPCIONISTA">Recepcionista</option>
+                </select>
+
+
+                <select [(ngModel)]="filtroEstado" class="h-11 rounded-xl border border-slate-200
+                 bg-slate-50 px-4
+                 text-sm text-slate-600
+                 outline-none
+                 transition-all
+                 focus:border-emerald-500
+                 focus:ring-4
+                 focus:ring-emerald-500/10">
+                    <option value="">Todos los estados</option>
+                    <option value="ACTIVO">Activo</option>
+                    <option value="INACTIVO">Inactivo</option>
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- =======================================================
+         TABLE
+    ======================================================== -->
+        <div class="overflow-x-auto">
+
+            <table class="w-full min-w-[900px]">
+
+                <thead>
+                    <tr class="border-b border-slate-100 bg-slate-50/70">
+
+                        <th class="px-6 py-4 text-left
+                     text-[11px] font-bold uppercase
+                     tracking-wider text-slate-400">
+                            Usuario
+                        </th>
+
+                        <th class="px-6 py-4 text-left
+                     text-[11px] font-bold uppercase
+                     tracking-wider text-slate-400">
+                            Rol
+                        </th>
+
+                        <th class="px-6 py-4 text-left
+                     text-[11px] font-bold uppercase
+                     tracking-wider text-slate-400">
+                            Estado
+                        </th>
+
+                        <th class="px-6 py-4 text-left
+                     text-[11px] font-bold uppercase
+                     tracking-wider text-slate-400">
+                            Correo Electrinco
+                        </th>
+
+                        <th class="px-6 py-4 text-right
+                     text-[11px] font-bold uppercase
+                     tracking-wider text-slate-400">
+                            Acciones
+                        </th>
+
+                    </tr>
+                </thead>
+
+
+                <tbody class="divide-y divide-slate-100">
+
+                    @for (usuario of usuariosFiltrados(); track usuario.id) {
+
+                    <tr class="group transition-colors
+                     hover:bg-slate-50/70">
+
+                        <!-- USER -->
+                        <td class="px-6 py-4">
+
+                            <div class="flex items-center gap-3">
+
+                                <!-- AVATAR -->
+                                <div class="flex h-10 w-10 shrink-0
+                           items-center justify-center
+                           rounded-xl
+                           bg-emerald-50
+                           text-sm font-bold
+                           text-emerald-700">
+                                    {{ obtenerIniciales(usuario) }}
+                                </div>
+
+                                <div>
+                                    <p class="text-sm font-semibold text-slate-800">
+                                        {{ usuario.nombre }}
+                                    </p>
+
+                                    <p class="mt-0.5 text-xs text-slate-400">
+                                        {{ usuario.nombre }}
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- ROLE -->
+                        <td class="px-6 py-4">
+
+                            <span class="inline-flex items-center rounded-lg
+                         px-2.5 py-1
+                         text-xs font-semibold" [class.bg-emerald-50]="usuario.rolNombre === 'ADMIN'"
+                                [class.text-emerald-700]="usuario.rolNombre === 'ADMIN'"
+                                [class.bg-teal-50]="usuario.rolNombre === 'VETERINARIO'"
+                                [class.text-teal-700]="usuario.rolNombre === 'VETERINARIO'"
+                                [class.bg-slate-100]="usuario.rolNombre === 'RECEPCIONISTA'"
+                                [class.text-slate-600]="usuario.rolNombre === 'RECEPCIONISTA'">
+                                {{ obtenerNombreRol(usuario.rolNombre) }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- STATUS -->
+                        <td class="px-6 py-4">
+
+                            @if (usuario.estadoRegistro) {
+
+                            <span class="inline-flex items-center gap-2
+                           text-xs font-semibold text-emerald-600">
+                                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+
+                                Activo
+                            </span>
+
+                            } @else {
+
+                            <span class="inline-flex items-center gap-2
+                           text-xs font-semibold text-slate-400">
+                                <span class="h-2 w-2 rounded-full bg-slate-300"></span>
+
+                                Inactivo
+                            </span>
+
+                            }
+
+                        </td>
+
+
+                        <!-- LAST LOGIN -->
+                        <td class="px-6 py-4">
+
+                            <span class="text-sm text-slate-500">
+                                {{ usuario.email }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- ACTIONS -->
+                        <td class="px-6 py-4">
+
+                            <div class="flex items-center justify-end gap-2">
+
+                                <!-- EDIT -->
+                                <button type="button" (click)="editarUsuario(usuario)" title="Editar usuario" class="flex h-9 w-9 items-center justify-center
+                           rounded-lg
+                           text-slate-400
+                           transition-all
+                           hover:bg-emerald-50
+                           hover:text-emerald-600">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.687
+                           a2.25 2.25 0 1 1 3.182 3.182
+                           l-9.193 9.193
+                           a4.5 4.5 0 0 1-1.897 1.13
+                           l-3.5 1
+                           1-3.5
+                           a4.5 4.5 0 0 1 1.13-1.897l9.193-9.193Z" />
+                                    </svg>
+                                </button>
+
+
+                                <!-- TOGGLE -->
+                                <button type="button" (click)="cambiarEstado(usuario)" title="Cambiar estado" class="flex h-9 w-9 items-center justify-center
+                           rounded-lg
+                           text-slate-400
+                           transition-all
+                           hover:bg-slate-100
+                           hover:text-slate-700">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6.75a3.75 3.75 0 1 1-7.5 0
+                           3.75 3.75 0 0 1 7.5 0ZM4.5 20.25
+                           a7.5 7.5 0 0 1 15 0" />
+                                    </svg>
+                                </button>
+
+
+                                <!-- DELETE -->
+                                <button type="button" (click)="eliminarUsuario(usuario)" title="Eliminar usuario" class="flex h-9 w-9 items-center justify-center
+                           rounded-lg
+                           text-slate-400
+                           transition-all
+                           hover:bg-red-50
+                           hover:text-red-500">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 7.5h12
+                           M9.75 7.5V5.25
+                           a1.5 1.5 0 0 1 1.5-1.5h1.5
+                           a1.5 1.5 0 0 1 1.5 1.5V7.5
+                           m-9 0 .75 12
+                           a1.5 1.5 0 0 0 1.5 1.406h6
+                           a1.5 1.5 0 0 0 1.5-1.406l.75-12" />
+                                    </svg>
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    } @empty {
+
+                    <tr>
+                        <td colspan="5" class="px-6 py-16 text-center">
+
+                            <div class="mx-auto flex h-14 w-14 items-center
+                         justify-center rounded-2xl
+                         bg-slate-100 text-slate-400">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6.75a3.75 3.75 0 1 1-7.5 0
+                         3.75 3.75 0 0 1 7.5 0ZM4.5 20.25
+                         a7.5 7.5 0 0 1 15 0" />
+                                </svg>
+                            </div>
+
+                            <p class="mt-4 text-sm font-semibold text-slate-700">
+                                No se encontraron usuarios
+                            </p>
+
+                            <p class="mt-1 text-xs text-slate-400">
+                                Prueba cambiando los filtros de búsqueda.
+                            </p>
+
+                        </td>
+                    </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- =======================================================
+         FOOTER TABLE
+    ======================================================== -->
+        <div class="flex flex-col gap-3 border-t border-slate-100
+             px-6 py-4 sm:flex-row sm:items-center
+             sm:justify-between">
+
+            <p class="text-xs text-slate-400">
+                Mostrando
+                <span class="font-semibold text-slate-600">
+                    {{ usuariosFiltrados().length }}
+                </span>
+                usuarios
+            </p>
+
+            <div class="flex items-center gap-2">
+
+                <button type="button" disabled class="flex h-9 items-center justify-center
+                 rounded-lg border border-slate-200
+                 px-3 text-xs font-semibold
+                 text-slate-300">
+                    Anterior
+                </button>
+
+                <button type="button" class="flex h-9 min-w-9 items-center justify-center
+                 rounded-lg bg-emerald-600
+                 px-3 text-xs font-semibold text-white">
+                    1
+                </button>
+
+                <button type="button" class="flex h-9 items-center justify-center
+                 rounded-lg border border-slate-200
+                 px-3 text-xs font-semibold
+                 text-slate-500
+                 hover:bg-slate-50">
+                    Siguiente
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MODAL CREAR / EDITAR
+========================================================== -->
+
+@if (mostrarModal()) {
+
+<div class="fixed inset-0 z-50 flex items-center justify-center
+           bg-slate-900/40 px-4 py-6 backdrop-blur-sm" (click)="cerrarModal()">
+
+    <div class="w-full max-w-lg overflow-hidden
+             rounded-2xl bg-white shadow-2xl" (click)="$event.stopPropagation()">
+
+        <!-- MODAL HEADER -->
+        <div class="flex items-start justify-between
+               border-b border-slate-100 px-6 py-5">
+
+            <div>
+
+                <div class="mb-3 flex h-10 w-10 items-center
+                   justify-center rounded-xl
+                   bg-emerald-50 text-emerald-600">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6.75a3.75 3.75 0 1 1-7.5 0
+                   3.75 3.75 0 0 1 7.5 0ZM4.5 20.25
+                   a7.5 7.5 0 0 1 15 0" />
+
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25v4.5m-2.25-2.25h4.5" />
+                    </svg>
+                </div>
+
+                <h2 class="text-lg font-bold text-slate-900">
+                    {{ usuarioEditando() ? 'Editar usuario' : 'Nuevo usuario' }}
+                </h2>
+
+                <p class="mt-1 text-xs text-slate-400">
+                    Configura los datos y permisos del usuario.
+                </p>
+
+            </div>
+
+            <button type="button" (click)="cerrarModal()" class="flex h-9 w-9 items-center justify-center
+                 rounded-lg text-slate-400
+                 transition-colors
+                 hover:bg-slate-100
+                 hover:text-slate-600">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6 6 18" />
+                </svg>
+            </button>
+
+        </div>
+
+
+        <!-- MODAL BODY -->
+        <form class="space-y-5 px-6 py-6" (ngSubmit)="guardarUsuario()">
+
+            <!-- NAME -->
+            <div>
+
+                <label class="mb-2 block text-sm font-semibold text-slate-700">
+                    Correo Electronico
+                </label>
+
+                <input type="text" [(ngModel)]="formUsuario.correo" name="correo" required placeholder="@gmail.com"
+                    class="h-11 w-full rounded-xl
+                   border border-slate-200
+                   bg-slate-50 px-4
+                   text-sm text-slate-900
+                   outline-none transition-all
+                   placeholder:text-slate-400
+                   focus:border-emerald-500
+                   focus:bg-white
+                   focus:ring-4
+                   focus:ring-emerald-500/10" />
+
+            </div>
+
+
+            <!-- USERNAME -->
+            <div>
+
+                <label class="mb-2 block text-sm font-semibold text-slate-700">
+                    Username
+                </label>
+
+                <input type="text" [(ngModel)]="formUsuario.nombre" name="nombre" required placeholder="Ej. cmendoza"
+                    class="h-11 w-full rounded-xl
+                   border border-slate-200
+                   bg-slate-50 px-4
+                   text-sm text-slate-900
+                   outline-none transition-all
+                   placeholder:text-slate-400
+                   focus:border-emerald-500
+                   focus:bg-white
+                   focus:ring-4
+                   focus:ring-emerald-500/10" />
+
+            </div>
+
+
+            <!-- ROLE -->
+            <div>
+
+                <label class="mb-2 block text-sm font-semibold text-slate-700">
+                    Rol
+                </label>
+
+                <select [(ngModel)]="formUsuario.rolId" name="rolId" required class="h-11 w-full rounded-xl
+                   border border-slate-200
+                   bg-slate-50 px-4
+                   text-sm text-slate-700
+                   outline-none transition-all
+                   focus:border-emerald-500
+                   focus:bg-white
+                   focus:ring-4
+                   focus:ring-emerald-500/10">
+                    <option [ngValue]="0">
+                        Selecciona un rol
+                    </option>
+
+                    <option [ngValue]="1">
+                        Administrador
+                    </option>
+
+                    <option [ngValue]="2">
+                        Veterinario
+                    </option>
+
+                    <option [ngValue]="3">
+                        Recepcionista
+                    </option>
+                </select>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+            @if (!usuarioEditando()) {
+
+            <div>
+
+                <label class="mb-2 block text-sm font-semibold text-slate-700">
+                    Contraseña
+                </label>
+
+                <input type="password" [(ngModel)]="formUsuario.password" name="password" required
+                    placeholder="••••••••" class="h-11 w-full rounded-xl
+                     border border-slate-200
+                     bg-slate-50 px-4
+                     text-sm text-slate-900
+                     outline-none transition-all
+                     placeholder:text-slate-400
+                     focus:border-emerald-500
+                     focus:bg-white
+                     focus:ring-4
+                     focus:ring-emerald-500/10" />
+
+            </div>
+
+            }
+
+
+
+
+            <!-- ACTIONS -->
+            <div class="flex flex-col-reverse gap-3
+                 pt-2 sm:flex-row sm:justify-end">
+
+                <button type="button" (click)="cerrarModal()" class="h-11 rounded-xl
+                   border border-slate-200
+                   px-5 text-sm font-semibold
+                   text-slate-600
+                   transition-colors
+                   hover:bg-slate-50">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="h-11 rounded-xl
+                   bg-emerald-600 px-6
+                   text-sm font-semibold text-white
+                   shadow-lg shadow-emerald-600/20
+                   transition-all
+                   hover:bg-emerald-700">
+                    {{ usuarioEditando() ? 'Guardar cambios' : 'Crear usuario' }}
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+}

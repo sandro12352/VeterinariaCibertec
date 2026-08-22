@@ -1,4 +1,5 @@
-<aside class="
+<aside class="fixed
+        
          left-0
          top-0
          z-40
@@ -164,7 +165,7 @@
 
         <!-- CITAS -->
 
-        <a routerLink="/dashboard/atenciones" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
+        <a routerLink="/atenciones" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
              relative
              flex
              h-11
@@ -265,7 +266,7 @@
 
         <!-- PROPIETARIOS -->
 
-        <a routerLink="/propietarios" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
+        <a routerLink="/personal-medico" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
              relative
              flex
              h-11
@@ -294,7 +295,7 @@
             @if (!collapsed()) {
 
             <span>
-                Propietarios
+                Personal Medico
             </span>
 
             }
@@ -656,7 +657,7 @@
              transition-all
              duration-200
              hover:bg-red-50
-             hover:text-red-600" [class.justify-center]="collapsed()">
+             hover:text-red-600" [class.justify-center]="collapsed()" (click)="cerrarSession()">
 
             <svg class="h-5
                w-5

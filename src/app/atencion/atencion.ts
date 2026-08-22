@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Atencion } from '../core/models';
-import { AtencionService } from '../core/atencion.service';
+import { Atencion } from '../core/models/models';
+import { AtencionService } from '../core/services/atencion.service';
 
 @Component({
   selector: 'app-atencion',

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PersonalMedico } from '../core/models';
-import { PersonalMedicoService } from '../core/personal-medico.service';
+import { PersonalMedico } from '../core/models/models';
+import { PersonalMedicoService } from '../core/services/personal-medico.service';
 
 @Component({
   selector: 'app-personal-medico',

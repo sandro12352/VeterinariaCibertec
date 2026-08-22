@@ -28,4 +28,13 @@ export class AuthService {
     );
   }
 
+
+  obtenerToken(): string | null {
+    return sessionStorage.getItem('authToken');
+  }
+
+  removerTokem(){
+    return sessionStorage.removeItem('authToken');
+  }
+
 }
