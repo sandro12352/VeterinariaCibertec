@@ -1,1 +1,76 @@
-<p>servicios works!</p>
+<div class="min-h-screen bg-slate-50 px-6 py-8 lg:px-8">
+
+  <!-- HEADER -->
+  <div class="mb-8">
+    <p class="text-xs font-bold uppercase tracking-[0.18em] text-emerald-600">Registro de servicios</p>
+    <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-900">Servicios</h1>
+    <p class="mt-1 text-sm text-slate-500">Gestiona la información de los servicios veterinarios.</p>
+  </div>
+
+  <!-- MENSAJE -->
+  @if (mensaje()) {
+    <div class="mb-6 flex items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium"
+         [class.border-emerald-200]="!esError()"
+         [class.bg-emerald-50]="!esError()"
+         [class.text-emerald-700]="!esError()"
+         [class.border-red-200]="esError()"
+         [class.bg-red-50]="esError()"
+         [class.text-red-700]="esError()">
+      <span>{{ mensaje() }}</span>
+    </div>
+  }
+
+  <!-- FORMULARIO -->
+  <form #servicioForm="ngForm"
+        class="mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+        (ngSubmit)="guardar()">
+
+    <div class="border-b border-slate-100 px-6 py-5 lg:px-7">
+      <h2 class="text-base font-bold text-slate-900">{{ servicio.id ? 'Editar servicio' : 'Nuevo servicio' }}</h2>
+      <p class="mt-0.5 text-xs text-slate-400">Registra la información del servicio.</p>
+    </div>
+
+    <div class="px-6 py-6 lg:px-7 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div>
+        <label for="nomServicio" class="mb-2 block text-sm font-semibold text-slate-700">Nombre</label>
+        <input id="nomServicio" name="nomServicio" [(ngModel)]="servicio.nomServicio" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
+      </div>
+
+      <div>
+        <label for="precio" class="mb-2 block text-sm font-semibold text-slate-700">Precio</label>
+        <input id="precio" name="precio" type="number" [(ngModel)]="servicio.precio" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
+      </div>
+
+      <div class="md:col-span-3">
+        <label for="descripcion" class="mb-2 block text-sm font-semibold text-slate-700">Descripción</label>
+        <textarea id="descripcion" name="descripcion" [(ngModel)]="servicio.descripcion" rows="4"
+                  class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm"></textarea>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <input id="estadoRegistro" name="estadoRegistro" type="checkbox" [(ngModel)]="servicio.estadoRegistro"
+               class="h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"/>
+        <label for="estadoRegistro" class="text-sm font-semibold text-slate-700">Activo</label>
+      </div>
+    </div>
+
+    <div class="mt-6 flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end">
+      <button type="button" (click)="cancelar()" class="inline-flex h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-600">Cancelar</button>
+      <button type="submit" [disabled]="servicioForm.invalid" class="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 text-sm font-semibold text-white"> {{ servicio.id ? 'Actualizar' : 'Guardar' }}</button>
+    </div>
+  </form>
+
+  <!-- LISTADO -->
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div class="flex flex-col gap-3 border-b border-slate-100 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+      <h2 class="text-base font-bold text-slate-900">Servicios registrados</h2>
+      <p class="mt-0.5 text-xs text-slate-400">Historial de servicios.</p>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[600px]">
+        <thead>
+          <tr class="border-b border-slate-100 bg-slate-50/70">
+            <th class="px-6 py-4 text-left text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">ID</th>

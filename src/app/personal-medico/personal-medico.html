@@ -1,150 +1,70 @@
-<div class="container py-4">
-  <h1 class="mb-4">
-    Personal Médico
-  </h1>
+<div class="min-h-screen bg-slate-50 px-6 py-8 lg:px-8">
 
+  <!-- HEADER -->
+  <div class="mb-8">
+    <p class="text-xs font-bold uppercase tracking-[0.18em] text-emerald-600">Registro de personal médico</p>
+    <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-900">Personal Médico</h1>
+    <p class="mt-1 text-sm text-slate-500">Gestiona la información del personal médico registrado.</p>
+  </div>
+
+  <!-- MENSAJE -->
   @if (mensaje()) {
-    <div
-      class="alert"
-      [class.alert-success]="!esError()"
-      [class.alert-danger]="esError()"
-    >
-      {{ mensaje() }}
+    <div class="mb-6 flex items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium"
+         [class.border-emerald-200]="!esError()"
+         [class.bg-emerald-50]="!esError()"
+         [class.text-emerald-700]="!esError()"
+         [class.border-red-200]="esError()"
+         [class.bg-red-50]="esError()"
+         [class.text-red-700]="esError()">
+      <span>{{ mensaje() }}</span>
     </div>
   }
 
-  <form
-    #medicoForm="ngForm"
-    class="card card-body mb-4"
-    (ngSubmit)="guardar()"
-  >
-    <h2 class="h5 mb-3">
-      {{ medico.usuarioId ? 'Editar médico' : 'Nuevo médico' }}
-    </h2>
+  <!-- FORMULARIO -->
+  <form #personalForm="ngForm"
+        class="mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+        (ngSubmit)="guardar()">
 
-    <div class="row g-3">
-      <div class="col-md-6">
-        <label for="personaNombre" class="form-label">
-          Nombre
-        </label>
-        <input
-          id="personaNombre"
-          name="personaNombre"
-          class="form-control"
-          maxlength="100"
-          [(ngModel)]="medico.personaNombre"
-          required
-        />
+    <div class="border-b border-slate-100 px-6 py-5 lg:px-7">
+      <h2 class="text-base font-bold text-slate-900">{{ personal.id ? 'Editar personal médico' : 'Nuevo personal médico' }}</h2>
+      <p class="mt-0.5 text-xs text-slate-400">Registra la información del personal médico.</p>
+    </div>
+
+    <div class="px-6 py-6 lg:px-7 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div>
+        <label for="usuarioNombre" class="mb-2 block text-sm font-semibold text-slate-700">Usuario</label>
+        <input id="usuarioNombre" name="usuarioNombre" [(ngModel)]="personal.usuarioNombre" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
       </div>
 
-      <div class="col-md-6">
-        <label for="rolNombre" class="form-label">
-          Rol
-        </label>
-        <input
-          id="rolNombre"
-          name="rolNombre"
-          class="form-control"
-          maxlength="50"
-          [(ngModel)]="medico.rolNombre"
-          required
-        />
+      <div>
+        <label for="email" class="mb-2 block text-sm font-semibold text-slate-700">Email</label>
+        <input id="email" name="email" type="email" [(ngModel)]="personal.email" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
       </div>
 
-      <div class="col-md-6">
-        <label for="especialidad" class="form-label">
-          Especialidad
-        </label>
-        <input
-          id="especialidad"
-          name="especialidad"
-          class="form-control"
-          maxlength="100"
-          [(ngModel)]="medico.especialidad"
-          required
-        />
+      <div>
+        <label for="especialidad" class="mb-2 block text-sm font-semibold text-slate-700">Especialidad</label>
+        <input id="especialidad" name="especialidad" [(ngModel)]="personal.especialidad" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
       </div>
 
-      <div class="col-md-6">
-        <label for="numeroColegiatura" class="form-label">
-          Número Colegiatura
-        </label>
-        <input
-          id="numeroColegiatura"
-          name="numeroColegiatura"
-          class="form-control"
-          maxlength="20"
-          [(ngModel)]="medico.numeroColegiatura"
-          required
-        />
+      <div>
+        <label for="numColegiatura" class="mb-2 block text-sm font-semibold text-slate-700">N° Colegiatura</label>
+        <input id="numColegiatura" name="numColegiatura" [(ngModel)]="personal.numColegiatura" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <input id="estadoRegistro" name="estadoRegistro" type="checkbox" [(ngModel)]="personal.estadoRegistro"
+               class="h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"/>
+        <label for="estadoRegistro" class="text-sm font-semibold text-slate-700">Activo</label>
       </div>
     </div>
 
-    <div class="mt-3 d-flex gap-2">
-      <button
-        type="submit"
-        class="btn btn-primary"
-        [disabled]="medicoForm.invalid"
-      >
-        {{ medico.usuarioId ? 'Actualizar' : 'Guardar' }}
-      </button>
-
-      <button
-        type="button"
-        class="btn btn-secondary"
-        (click)="cancelar()"
-      >
-        Cancelar
-      </button>
+    <div class="mt-6 flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end">
+      <button type="button" (click)="cancelar()" class="inline-flex h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-600">Cancelar</button>
+      <button type="submit" [disabled]="personalForm.invalid" class="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 text-sm font-semibold text-white"> {{ personal.id ? 'Actualizar' : 'Guardar' }}</button>
     </div>
   </form>
 
-  <div class="table-responsive">
-    <table class="table table-striped align-middle">
-      <thead>
-        <tr>
-          <th>Usuario ID</th>
-          <th>Nombre</th>
-          <th>Rol</th>
-          <th>Especialidad</th>
-          <th>Número Colegiatura</th>
-          <th class="text-end">Acciones</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        @for (item of medicos(); track item.usuarioId) {
-          <tr>
-            <td>{{ item.usuarioId }}</td>
-            <td>{{ item.personaNombre }}</td>
-            <td>{{ item.rolNombre }}</td>
-            <td>{{ item.especialidad }}</td>
-            <td>{{ item.numeroColegiatura }}</td>
-            <td class="text-end">
-              <button
-                type="button"
-                class="btn btn-sm btn-warning me-2"
-                (click)="editar(item)"
-              >
-                Editar
-              </button>
-              <button
-                type="button"
-                class="btn btn-sm btn-danger"
-                (click)="eliminar(item)"
-              >
-                Eliminar
-              </button>
-            </td>
-          </tr>
-        } @empty {
-          <tr>
-            <td colspan="6" class="py-4 text-center text-muted">
-              No hay médicos registrados.
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  </div>
-</div>

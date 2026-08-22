@@ -1,1 +1,66 @@
-<p>mascotas works!</p>
+<div class="min-h-screen bg-slate-50 px-6 py-8 lg:px-8">
+
+  <!-- HEADER -->
+  <div class="mb-8">
+    <p class="text-xs font-bold uppercase tracking-[0.18em] text-emerald-600">Registro de mascotas</p>
+    <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-900">Mascotas</h1>
+    <p class="mt-1 text-sm text-slate-500">Gestiona la información de las mascotas registradas.</p>
+  </div>
+
+  <!-- MENSAJE -->
+  @if (mensaje()) {
+    <div class="mb-6 flex items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium"
+         [class.border-emerald-200]="!esError()"
+         [class.bg-emerald-50]="!esError()"
+         [class.text-emerald-700]="!esError()"
+         [class.border-red-200]="esError()"
+         [class.bg-red-50]="esError()"
+         [class.text-red-700]="esError()">
+      <span>{{ mensaje() }}</span>
+    </div>
+  }
+
+  <!-- FORMULARIO -->
+  <form #mascotaForm="ngForm"
+        class="mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+        (ngSubmit)="guardar()">
+
+    <div class="border-b border-slate-100 px-6 py-5 lg:px-7">
+      <h2 class="text-base font-bold text-slate-900">{{ mascota.id ? 'Editar mascota' : 'Nueva mascota' }}</h2>
+      <p class="mt-0.5 text-xs text-slate-400">Registra la información de la mascota.</p>
+    </div>
+
+    <div class="px-6 py-6 lg:px-7 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div>
+        <label for="nomMascota" class="mb-2 block text-sm font-semibold text-slate-700">Nombre</label>
+        <input id="nomMascota" name="nomMascota" [(ngModel)]="mascota.nomMascota" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
+      </div>
+
+      <div>
+        <label for="animalNombre" class="mb-2 block text-sm font-semibold text-slate-700">Animal</label>
+        <input id="animalNombre" name="animalNombre" [(ngModel)]="mascota.animalNombre" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
+      </div>
+
+      <div>
+        <label for="clienteNombre" class="mb-2 block text-sm font-semibold text-slate-700">Cliente</label>
+        <input id="clienteNombre" name="clienteNombre" [(ngModel)]="mascota.clienteNombre" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
+      </div>
+
+      <div>
+        <label for="fechaNacimiento" class="mb-2 block text-sm font-semibold text-slate-700">Fecha nacimiento</label>
+        <input id="fechaNacimiento" name="fechaNacimiento" type="date" [(ngModel)]="mascota.fechaNacimiento" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
+      </div>
+
+      <div>
+        <label for="sexo" class="mb-2 block text-sm font-semibold text-slate-700">Sexo</label>
+        <input id="sexo" name="sexo" [(ngModel)]="mascota.sexo" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
+      </div>
+
+      <div>
+        <label for="peso" class="mb-2 block text-sm font-semibold text-slate-700">Peso</label>
+        <input id="peso

@@ -1,97 +1,70 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { PersonalMedico } from '../core/models';
 import { PersonalMedicoService } from '../core/personal-medico.service';
+import { PersonalMedico } from '../core/models';
 
-@Component({
-  selector: 'app-personal-medico',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './personal-medico.html',
-  styleUrl: './personal-medico.css',
-})
-export class PersonalMedicoo implements OnInit {
+export class PersonalMedicos {
+  personalLista: PersonalMedico[] = [];
+  personal: PersonalMedico = {
+    id: undefined,
+    usuarioId: 0,
+    usuarioNombre: '',
+    email: '',
+    especialidad: '',
+    numColegiatura: '',
+    estadoRegistro: true
+  };
+  mensajeTexto: string = '';
+  error: boolean = false;
 
-  readonly medicos = signal<PersonalMedico[]>([]);
-  readonly mensaje = signal('');
-  readonly esError = signal(false);
-
-  medico: PersonalMedico = this.nuevoMedico();
-
-  private readonly personalMedicoService = inject(PersonalMedicoService);
-
-  ngOnInit(): void {
-    this.listar();
+  constructor(private personalMedicoService: PersonalMedicoService) {
+    this.cargarPersonal();
   }
 
-  listar(): void {
-    this.personalMedicoService.listarMedicos().subscribe({
-      next: response => this.medicos.set(response),
-      error: error => {
-        this.esError.set(true);
-        this.mensaje.set(error.error?.message ?? 'No se pudieron obtener los médicos');
-      }
+  mensaje(): string { return this.mensajeTexto; }
+  esError(): boolean { return this.error; }
+
+  cargarPersonal(): void {
+    this.personalMedicoService.obtenerTodos().subscribe({
+      next: data => this.personalLista = data,
+      error: () => { this.error = true; this.mensajeTexto = 'Error al cargar personal médico'; }
     });
   }
 
   guardar(): void {
-    this.mensaje.set('');
-
-    const operacion = this.medico.usuarioId
-      ? this.personalMedicoService.actualizarMedico(this.medico.usuarioId, this.medico)
-      : this.personalMedicoService.registrarMedico(this.medico);
-
-    operacion.subscribe({
-      next: () => {
-        this.esError.set(false);
-        this.mensaje.set(this.medico.usuarioId
-          ? 'Médico actualizado correctamente'
-          : 'Médico registrado correctamente');
-        this.cancelar();
-        this.listar();
-      },
-      error: error => {
-        this.esError.set(true);
-        this.mensaje.set(error.error?.message ?? 'No se pudo guardar el médico');
-      }
-    });
-  }
-
-  editar(medico: PersonalMedico): void {
-    this.medico = { ...medico };
-    this.mensaje.set('');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  eliminar(medico: PersonalMedico): void {
-    if (!medico.usuarioId || !confirm(`¿Deseas eliminar al médico ${medico.personaNombre}?`)) {
-      return;
+    if (this.personal.id) {
+      this.personalMedicoService.actualizar(this.personal.id, this.personal).subscribe({
+        next: () => { this.mensajeTexto = 'Personal médico actualizado'; this.error = false; this.cargarPersonal(); this.cancelar(); },
+        error: () => { this.error = true; this.mensajeTexto = 'Error al actualizar personal médico'; }
+      });
+    } else {
+      this.personalMedicoService.crear(this.personal).subscribe({
+        next: () => { this.mensajeTexto = 'Personal médico registrado'; this.error = false; this.cargarPersonal(); this.cancelar(); },
+        error: () => { this.error = true; this.mensajeTexto = 'Error al registrar personal médico'; }
+      });
     }
+  }
 
-    this.personalMedicoService.eliminarMedico(medico.usuarioId).subscribe({
-      next: () => {
-        this.esError.set(false);
-        this.mensaje.set('Médico eliminado correctamente');
-        this.listar();
-      },
-      error: error => {
-        this.esError.set(true);
-        this.mensaje.set(error.error?.message ?? 'No se pudo eliminar el médico');
-      }
-    });
+  editar(item: PersonalMedico): void { this.personal = { ...item }; }
+
+  eliminar(item: PersonalMedico): void {
+    if (item.id) {
+      this.personalMedicoService.eliminar(item.id).subscribe({
+        next: () => { this.mensajeTexto = 'Personal médico eliminado'; this.error = false; this.cargarPersonal(); },
+        error: () => { this.error = true; this.mensajeTexto = 'Error al eliminar personal médico'; }
+      });
+    }
   }
 
   cancelar(): void {
-    this.medico = this.nuevoMedico();
-  }
-
-  private nuevoMedico(): PersonalMedico {
-    return {
+    this.personal = {
+      id: undefined,
       usuarioId: 0,
-      numeroColegiatura: '',
+      usuarioNombre: '',
+      email: '',
       especialidad: '',
-      rolNombre: '',
-      personaNombre: ''
+      numColegiatura: '',
+      estadoRegistro: true
     };
   }
+
+  personalMedicos(): PersonalMedico[] { return this.personalLista; }
 }

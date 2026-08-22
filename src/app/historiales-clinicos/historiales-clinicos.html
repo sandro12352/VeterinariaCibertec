@@ -1,1 +1,66 @@
-<p>historiales-clinicos works!</p>
+<div class="min-h-screen bg-slate-50 px-6 py-8 lg:px-8">
+
+  <!-- HEADER -->
+  <div class="mb-8">
+    <p class="text-xs font-bold uppercase tracking-[0.18em] text-emerald-600">Registro de historiales clínicos</p>
+    <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-900">Historiales clínicos</h1>
+    <p class="mt-1 text-sm text-slate-500">Gestiona la información de los historiales médicos de las mascotas.</p>
+  </div>
+
+  <!-- MENSAJE -->
+  @if (mensaje()) {
+    <div class="mb-6 flex items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium"
+         [class.border-emerald-200]="!esError()"
+         [class.bg-emerald-50]="!esError()"
+         [class.text-emerald-700]="!esError()"
+         [class.border-red-200]="esError()"
+         [class.bg-red-50]="esError()"
+         [class.text-red-700]="esError()">
+      <span>{{ mensaje() }}</span>
+    </div>
+  }
+
+  <!-- FORMULARIO -->
+  <form #historialForm="ngForm"
+        class="mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+        (ngSubmit)="guardar()">
+
+    <div class="border-b border-slate-100 px-6 py-5 lg:px-7">
+      <h2 class="text-base font-bold text-slate-900">{{ historial.id ? 'Editar historial' : 'Nuevo historial' }}</h2>
+      <p class="mt-0.5 text-xs text-slate-400">Registra la información clínica de la mascota.</p>
+    </div>
+
+    <div class="px-6 py-6 lg:px-7 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div>
+        <label for="mascotaNombre" class="mb-2 block text-sm font-semibold text-slate-700">Mascota</label>
+        <input id="mascotaNombre" name="mascotaNombre" [(ngModel)]="historial.mascotaNombre" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
+      </div>
+
+      <div>
+        <label for="clienteNombre" class="mb-2 block text-sm font-semibold text-slate-700">Cliente</label>
+        <input id="clienteNombre" name="clienteNombre" [(ngModel)]="historial.clienteNombre" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
+      </div>
+
+      <div>
+        <label for="fechaApertura" class="mb-2 block text-sm font-semibold text-slate-700">Fecha apertura</label>
+        <input id="fechaApertura" name="fechaApertura" type="date" [(ngModel)]="historial.fechaApertura" required
+               class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm"/>
+      </div>
+
+      <div class="md:col-span-3">
+        <label for="observaciones" class="mb-2 block text-sm font-semibold text-slate-700">Observaciones</label>
+        <textarea id="observaciones" name="observaciones" [(ngModel)]="historial.observaciones" rows="4"
+                  class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm"></textarea>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <input id="estadoRegistro" name="estadoRegistro" type="checkbox" [(ngModel)]="historial.estadoRegistro"
+               class="h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"/>
+        <label for="estadoRegistro" class="text-sm font-semibold text-slate-700">Activo</label>
+      </div>
+    </div>
+
+    <div class="mt-6 flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end">
+      <button type="button" (click)="cancelar()" class="inline-flex h-11 items-center justify-center rounded-xl border border-slate-
