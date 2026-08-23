@@ -578,6 +578,13 @@
               ID
             </th>
 
+             <th
+              class="px-4 py-4 text-left text-[10px] font-bold uppercase
+                     tracking-[0.14em] text-slate-400"
+            >
+              Cliente
+            </th>
+
             <th
               class="px-4 py-4 text-left text-[10px] font-bold uppercase
                      tracking-[0.14em] text-slate-400"
@@ -606,12 +613,7 @@
               Fecha
             </th>
 
-            <th
-              class="px-4 py-4 text-left text-[10px] font-bold uppercase
-                     tracking-[0.14em] text-slate-400"
-            >
-              Historial
-            </th>
+           
 
             <th
               class="px-4 py-4 text-left text-[10px] font-bold uppercase
@@ -654,6 +656,27 @@
                 >
                   {{ item.id }}
                 </span>
+
+              </td>
+
+               <!-- HISTORIAL -->
+              <td class="px-4 py-4">
+
+                <div class="flex items-center gap-2">
+
+                  <div
+                    class="flex h-8 w-8 items-center justify-center
+                           rounded-lg bg-violet-50 text-xs font-bold
+                           text-violet-600"
+                  >
+                  Cl
+                  </div>
+
+                  <span class="text-sm font-medium text-slate-600">
+                    {{ item.clienteNombre }}
+                  </span>
+
+                </div>
 
               </td>
 
@@ -750,26 +773,7 @@
               </td>
 
 
-              <!-- HISTORIAL -->
-              <td class="px-4 py-4">
-
-                <div class="flex items-center gap-2">
-
-                  <div
-                    class="flex h-8 w-8 items-center justify-center
-                           rounded-lg bg-violet-50 text-xs font-bold
-                           text-violet-600"
-                  >
-                    H
-                  </div>
-
-                  <span class="text-sm font-medium text-slate-600">
-                    #{{ item.historialId }}
-                  </span>
-
-                </div>
-
-              </td>
+             
 
 
               <!-- MÉDICO -->
