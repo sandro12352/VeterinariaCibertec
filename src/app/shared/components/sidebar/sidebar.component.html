@@ -553,6 +553,8 @@
         }
 
 
+        @if(authService.tieneRol('ROLE_ADMIN')){
+
         <!-- USUARIOS -->
 
         <a routerLink="/usuarios" routerLinkActive="bg-emerald-50 text-emerald-700" class="group
@@ -590,6 +592,8 @@
             }
 
         </a>
+        }
+
 
 
         <!-- CONFIGURACIÓN -->

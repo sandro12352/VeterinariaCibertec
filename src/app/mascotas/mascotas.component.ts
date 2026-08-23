@@ -1,8 +1,25 @@
-import { Mascota } from "../core/models/models";
-import { MascotasService } from "../core/services/mascotas.service";
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { Animal, Cliente, Mascota } from '../core/models/models';
+import { MascotasService } from '../core/services/mascotas.service';
+import { FormsModule } from '@angular/forms';
+import { ClientesService } from '../core/services/clientes.service';
+import { AnimalesService } from '../core/services/animales.service';
+import { RouterLink } from "@angular/router";
 
-export class Mascotas {
-  mascotasLista: Mascota[] = [];
+@Component({
+  selector: 'app-mascotas',
+  imports: [FormsModule, RouterLink],
+  templateUrl: './mascotas.component.html',
+  styleUrl: './mascotas.component.css',
+})
+export class MascotasComponent implements OnInit {
+  private readonly mascotasService = inject(MascotasService);
+  private readonly clienteService = inject(ClientesService);
+  private readonly animaleService = inject(AnimalesService);
+
+  mascotasLista = signal<Mascota[]>([]);
+  clientesLista = signal<Cliente[]>([]);
+  animalesLista = signal<Animal[]>([]);
   mascota: Mascota = {
     id: undefined,
     animalId: 0,
@@ -19,16 +36,32 @@ export class Mascotas {
   mensajeTexto: string = '';
   error: boolean = false;
 
-  constructor(private mascotasService: MascotasService) {
+  ngOnInit(): void {
     this.cargarMascotas();
+    this.cargarClientes();
+    this.cargarAnimales();
   }
 
   mensaje(): string { return this.mensajeTexto; }
   esError(): boolean { return this.error; }
 
+  cargarAnimales() {
+    this.animaleService.obtenerTodos().subscribe({
+      next: data => { this.animalesLista.set(data), console.log(data) },
+      error: () => { this.error = true; this.mensajeTexto = 'Error al cargar cleintes'; }
+    })
+  }
+
+  cargarClientes() {
+    this.clienteService.obtenerTodos().subscribe({
+      next: data => { this.clientesLista.set(data), console.log(data) },
+      error: () => { this.error = true; this.mensajeTexto = 'Error al cargar cleintes'; }
+    })
+  }
+
   cargarMascotas(): void {
     this.mascotasService.obtenerTodos().subscribe({
-      next: data => this.mascotasLista = data,
+      next: data => this.mascotasLista.set(data),
       error: () => { this.error = true; this.mensajeTexto = 'Error al cargar mascotas'; }
     });
   }
@@ -73,6 +106,4 @@ export class Mascotas {
       estadoRegistro: true
     };
   }
-
-  mascotas(): Mascota[] { return this.mascotasLista; }
 }

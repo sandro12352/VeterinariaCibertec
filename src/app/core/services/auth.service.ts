@@ -33,8 +33,32 @@ export class AuthService {
     return sessionStorage.getItem('authToken');
   }
 
-  removerTokem(){
+  removerTokem() {
     return sessionStorage.removeItem('authToken');
+  }
+
+  obtenerRoles(): string[] {
+    const roles =
+      sessionStorage.getItem('authRoles');
+
+    return roles
+      ? JSON.parse(roles) as string[]
+      : [];
+  }
+
+  tieneRol(rol: string): boolean {
+    return this.obtenerRoles().includes(rol);
+  }
+
+
+  estaAutenticado(): boolean {
+    return this.obtenerToken() !== null;
+  }
+
+  logout(): void {
+    sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('authUsername');
+    sessionStorage.removeItem('authRoles');
   }
 
 }

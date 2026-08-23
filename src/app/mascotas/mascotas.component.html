@@ -1,0 +1,676 @@
+<div class="min-h-screen bg-slate-50 px-6 py-8 lg:px-8">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+  <div class="mb-8 flex justify-between items-center">
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.18em] text-emerald-600">
+          Gestión veterinaria
+        </p>
+
+        <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-900">
+          Mascotas
+        </h1>
+
+        <p class="mt-1 text-sm text-slate-500">
+          Registra y administra las mascotas de nuestros pacientes.
+        </p>
+      </div>
+
+    </div>
+
+    <div>
+      <a class="inline-flex h-11 items-center justify-center gap-2
+               rounded-xl bg-emerald-600 px-5
+               text-sm font-semibold text-white
+               shadow-lg shadow-emerald-600/20
+               transition-all duration-200
+               hover:bg-emerald-700
+               active:bg-emerald-800
+               disabled:cursor-not-allowed
+               disabled:opacity-50" routerLink="/mascotas/animales">+ Agregar Animal</a>
+    </div>
+  </div>
+
+
+  <!-- =====================================================
+       MENSAJE
+  ====================================================== -->
+  @if (mensaje()) {
+
+    <div
+      class="mb-6 flex items-center gap-3 rounded-xl border px-4 py-3
+             text-sm font-medium"
+      [class.border-emerald-200]="!esError()"
+      [class.bg-emerald-50]="!esError()"
+      [class.text-emerald-700]="!esError()"
+      [class.border-red-200]="esError()"
+      [class.bg-red-50]="esError()"
+      [class.text-red-700]="esError()"
+    >
+
+      <span>
+        {{ mensaje() }}
+      </span>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       FORMULARIO
+  ====================================================== -->
+  <form
+    #mascotaForm="ngForm"
+    class="mb-8 overflow-hidden rounded-2xl border border-slate-200
+           bg-white shadow-sm"
+    (ngSubmit)="guardar()"
+  >
+
+    <!-- HEADER FORM -->
+    <div class="border-b border-slate-100 px-6 py-5 lg:px-7">
+
+      <h2 class="text-base font-bold text-slate-900">
+        {{ mascota.id ? 'Editar mascota' : 'Registrar mascota' }}
+      </h2>
+
+      <p class="mt-0.5 text-xs text-slate-400">
+        Completa la información básica de la mascota.
+      </p>
+
+    </div>
+
+
+    <!-- CAMPOS -->
+    <div
+      class="grid grid-cols-1 gap-5 px-6 py-6
+             md:grid-cols-2 lg:grid-cols-3 lg:px-7"
+    >
+
+      <!-- =================================================
+           NOMBRE MASCOTA
+      ================================================== -->
+      <div>
+
+        <label
+          for="nomMascota"
+          class="mb-2 block text-sm font-semibold text-slate-700"
+        >
+          Nombre de la mascota
+        </label>
+
+        <input
+          id="nomMascota"
+          name="nomMascota"
+          type="text"
+          [(ngModel)]="mascota.nomMascota"
+          required
+          maxlength="100"
+          placeholder="Ej. Firulais"
+          class="h-12 w-full rounded-xl border border-slate-200
+                 bg-slate-50 px-4 text-sm text-slate-900
+                 outline-none transition-all
+                 placeholder:text-slate-400
+                 focus:border-emerald-500
+                 focus:bg-white
+                 focus:ring-4
+                 focus:ring-emerald-500/10"
+        />
+
+      </div>
+
+
+      <!-- =================================================
+           ANIMAL
+      ================================================== -->
+      <div>
+
+        <label
+          for="idAnimal"
+          class="mb-2 block text-sm font-semibold text-slate-700"
+        >
+          Tipo de animal
+        </label>
+
+        <select
+          id="idAnimal"
+          name="idAnimal"
+          [(ngModel)]="mascota.animalId"
+          required
+          class="h-12 w-full rounded-xl border border-slate-200
+                 bg-slate-50 px-4 text-sm text-slate-900
+                 outline-none transition-all
+                 focus:border-emerald-500
+                 focus:bg-white
+                 focus:ring-4
+                 focus:ring-emerald-500/10"
+        >
+
+          <option [ngValue]="undefined">
+            Selecciona un animal
+          </option>
+
+          @for (animal of animalesLista(); track animal.id) {
+
+            <option [ngValue]="animal.id">
+              {{ animal.nomAnimal }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <!-- =================================================
+           CLIENTE
+      ================================================== -->
+      <div>
+
+        <label
+          for="idCliente"
+          class="mb-2 block text-sm font-semibold text-slate-700"
+        >
+          Propietario
+        </label>
+
+        <select
+          id="idCliente"
+          name="idCliente"
+          [(ngModel)]="mascota.clienteId"
+          required
+          class="h-12 w-full rounded-xl border border-slate-200
+                 bg-slate-50 px-4 text-sm text-slate-900
+                 outline-none transition-all
+                 focus:border-emerald-500
+                 focus:bg-white
+                 focus:ring-4
+                 focus:ring-emerald-500/10"
+        >
+
+          <option [ngValue]="undefined">
+            Selecciona un propietario
+          </option>
+
+          @for (cliente of clientesLista(); track cliente.id) {
+
+            <option [ngValue]="cliente.id">
+              {{ cliente.nombre }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <!-- =================================================
+           FECHA NACIMIENTO
+      ================================================== -->
+      <div>
+
+        <label
+          for="fechaNacimiento"
+          class="mb-2 block text-sm font-semibold text-slate-700"
+        >
+          Fecha de nacimiento
+        </label>
+
+        <input
+          id="fechaNacimiento"
+          name="fechaNacimiento"
+          type="date"
+          [(ngModel)]="mascota.fechaNacimiento"
+          class="h-12 w-full rounded-xl border border-slate-200
+                 bg-slate-50 px-4 text-sm text-slate-900
+                 outline-none transition-all
+                 focus:border-emerald-500
+                 focus:bg-white
+                 focus:ring-4
+                 focus:ring-emerald-500/10"
+        />
+
+      </div>
+
+
+      <!-- =================================================
+           SEXO
+      ================================================== -->
+      <div>
+
+        <label
+          for="sexo"
+          class="mb-2 block text-sm font-semibold text-slate-700"
+        >
+          Sexo
+        </label>
+
+        <select
+          id="sexo"
+          name="sexo"
+          [(ngModel)]="mascota.sexo"
+          class="h-12 w-full rounded-xl border border-slate-200
+                 bg-slate-50 px-4 text-sm text-slate-900
+                 outline-none transition-all
+                 focus:border-emerald-500
+                 focus:bg-white
+                 focus:ring-4
+                 focus:ring-emerald-500/10"
+        >
+
+          <option [ngValue]="undefined">
+            Selecciona el sexo
+          </option>
+
+          <option value="Macho">
+            Macho
+          </option>
+
+          <option value="Hembra">
+            Hembra
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- =================================================
+           PESO
+      ================================================== -->
+      <div>
+
+        <label
+          for="peso"
+          class="mb-2 block text-sm font-semibold text-slate-700"
+        >
+          Peso
+        </label>
+
+        <div class="relative">
+
+          <input
+            id="peso"
+            name="peso"
+            type="number"
+            step="0.01"
+            min="0"
+            max="999.99"
+            [(ngModel)]="mascota.peso"
+            placeholder="Ej. 12.50"
+            class="h-12 w-full rounded-xl border border-slate-200
+                   bg-slate-50 px-4 pr-14 text-sm text-slate-900
+                   outline-none transition-all
+                   placeholder:text-slate-400
+                   focus:border-emerald-500
+                   focus:bg-white
+                   focus:ring-4
+                   focus:ring-emerald-500/10"
+          />
+
+          <span
+            class="pointer-events-none absolute right-4 top-1/2
+                   -translate-y-1/2 text-xs font-semibold text-slate-400"
+          >
+            kg
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           COLOR
+      ================================================== -->
+      <div>
+
+        <label
+          for="color"
+          class="mb-2 block text-sm font-semibold text-slate-700"
+        >
+          Color
+        </label>
+
+        <input
+          id="color"
+          name="color"
+          type="text"
+          maxlength="50"
+          [(ngModel)]="mascota.color"
+          placeholder="Ej. Marrón con blanco"
+          class="h-12 w-full rounded-xl border border-slate-200
+                 bg-slate-50 px-4 text-sm text-slate-900
+                 outline-none transition-all
+                 placeholder:text-slate-400
+                 focus:border-emerald-500
+                 focus:bg-white
+                 focus:ring-4
+                 focus:ring-emerald-500/10"
+        />
+
+      </div>
+
+
+      <!-- =================================================
+           ESTADO
+      ================================================== -->
+      <div class="flex items-center">
+
+        <label
+          class="flex cursor-pointer items-center gap-3"
+        >
+
+          <input
+            id="estadoRegistro"
+            name="estadoRegistro"
+            type="checkbox"
+            [(ngModel)]="mascota.estadoRegistro"
+            class="h-5 w-5 rounded border-slate-300
+                   text-emerald-600
+                   focus:ring-emerald-500"
+          />
+
+          <span>
+
+            <span class="block text-sm font-semibold text-slate-700">
+              Mascota activa
+            </span>
+
+            <span class="block text-xs text-slate-400">
+              Disponible para atención veterinaria
+            </span>
+
+          </span>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ACTIONS
+    ====================================================== -->
+    <div
+      class="flex flex-col-reverse gap-3 border-t border-slate-100
+             px-6 py-5 sm:flex-row sm:justify-end lg:px-7"
+    >
+
+      <button
+        type="button"
+        (click)="cancelar()"
+        class="inline-flex h-11 items-center justify-center
+               rounded-xl border border-slate-200 bg-white px-5
+               text-sm font-semibold text-slate-600
+               transition-all
+               hover:border-slate-300
+               hover:bg-slate-50
+               hover:text-slate-800"
+      >
+        Cancelar
+      </button>
+
+      <button
+        type="submit"
+        [disabled]="mascotaForm.invalid"
+        class="inline-flex h-11 items-center justify-center gap-2
+               rounded-xl bg-emerald-600 px-5
+               text-sm font-semibold text-white
+               shadow-lg shadow-emerald-600/20
+               transition-all duration-200
+               hover:bg-emerald-700
+               active:bg-emerald-800
+               disabled:cursor-not-allowed
+               disabled:opacity-50"
+      >
+
+        @if (mascota.id) {
+          Actualizar mascota
+        } @else {
+          Registrar mascota
+        }
+
+      </button>
+
+    </div>
+
+  </form>
+
+
+  <!-- =====================================================
+       LISTADO
+  ====================================================== -->
+  <div
+    class="overflow-hidden rounded-2xl border border-slate-200
+           bg-white shadow-sm"
+  >
+
+    <div
+      class="flex flex-col gap-3 border-b border-slate-100
+             px-6 py-5 sm:flex-row sm:items-center
+             sm:justify-between"
+    >
+
+      <div>
+        <h2 class="text-base font-bold text-slate-900">
+          Mascotas registradas
+        </h2>
+
+        <p class="mt-0.5 text-xs text-slate-400">
+          Listado de mascotas registradas en VetCare.
+        </p>
+      </div>
+
+      <span
+        class="inline-flex w-fit items-center rounded-full
+               bg-emerald-50 px-3 py-1 text-xs font-semibold
+               text-emerald-700"
+      >
+        {{ mascotasLista().length }} mascotas
+      </span>
+
+    </div>
+
+
+    <!-- TABLA -->
+    <div class="overflow-x-auto">
+
+      <table class="w-full min-w-[900px]">
+
+        <thead>
+
+          <tr class="border-b border-slate-100 bg-slate-50/70">
+
+            <th class="px-6 py-4 text-left text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+              ID
+            </th>
+
+            <th class="px-4 py-4 text-left text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+              Mascota
+            </th>
+
+            <th class="px-4 py-4 text-left text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+              Animal
+            </th>
+
+            <th class="px-4 py-4 text-left text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+              Propietario
+            </th>
+
+            <th class="px-4 py-4 text-left text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+              Sexo
+            </th>
+
+            <th class="px-4 py-4 text-left text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+              Peso
+            </th>
+
+            <th class="px-4 py-4 text-left text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+              Estado
+            </th>
+
+            <th class="px-6 py-4 text-right text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+              Acciones
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody class="divide-y divide-slate-100">
+
+          @for (item of mascotasLista(); track item.id) {
+
+            <tr class="transition-colors hover:bg-slate-50/70">
+
+              <td class="px-6 py-4">
+                <span class="text-sm font-bold text-slate-500">
+                  #{{ item.id }}
+                </span>
+              </td>
+
+              <td class="px-4 py-4">
+                <span class="text-sm font-semibold text-slate-800">
+                  {{ item.nomMascota }}
+                </span>
+              </td>
+
+              <td class="px-4 py-4">
+                <span class="text-sm text-slate-600">
+                  {{ item.animalNombre }}
+                </span>
+              </td>
+
+              <td class="px-4 py-4">
+                <span class="text-sm text-slate-600">
+                  {{ item.clienteNombre }}
+                </span>
+              </td>
+
+              <td class="px-4 py-4">
+                <span class="text-sm text-slate-600">
+                  {{ item.sexo || '—' }}
+                </span>
+              </td>
+
+              <td class="px-4 py-4">
+                <span class="text-sm text-slate-600">
+                  {{ item.peso ? item.peso + ' kg' : '—' }}
+                </span>
+              </td>
+
+              <td class="px-4 py-4">
+
+                @if (item.estadoRegistro) {
+
+                  <span
+                    class="inline-flex rounded-full bg-emerald-50
+                           px-3 py-1 text-xs font-semibold
+                           text-emerald-600"
+                  >
+                    Activo
+                  </span>
+
+                } @else {
+
+                  <span
+                    class="inline-flex rounded-full bg-red-50
+                           px-3 py-1 text-xs font-semibold
+                           text-red-600"
+                  >
+                    Inactivo
+                  </span>
+
+                }
+
+              </td>
+
+              <td class="px-6 py-4">
+
+                <div class="flex justify-end gap-2">
+
+                  <button
+                    type="button"
+                    (click)="editar(item)"
+                    title="Editar mascota"
+                    class="h-9 w-9 rounded-lg border border-slate-200
+                           bg-white text-slate-400
+                           transition-colors
+                           hover:bg-amber-50
+                           hover:text-amber-600"
+                  >
+                    ✏️
+                  </button>
+
+                  <button
+                    type="button"
+                    (click)="eliminar(item)"
+                    title="Eliminar mascota"
+                    class="h-9 w-9 rounded-lg border border-slate-200
+                           bg-white text-slate-400
+                           transition-colors
+                           hover:bg-red-50
+                           hover:text-red-600"
+                  >
+                    🗑️
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          } @empty {
+
+            <tr>
+
+              <td
+                colspan="8"
+                class="px-6 py-16 text-center"
+              >
+
+                <div class="flex flex-col items-center">
+
+                  <div
+                    class="mb-3 flex h-12 w-12 items-center
+                           justify-center rounded-full bg-slate-100
+                           text-xl"
+                  >
+                    🐾
+                  </div>
+
+                  <p class="text-sm font-semibold text-slate-600">
+                    No hay mascotas registradas
+                  </p>
+
+                  <p class="mt-1 text-xs text-slate-400">
+                    Registra una mascota para comenzar.
+                  </p>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

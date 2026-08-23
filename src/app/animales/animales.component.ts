@@ -1,24 +1,49 @@
-import { Animal } from "../core/models/models";
-import { AnimalesService } from "../core/services/animales.service";
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { Animal } from '../core/models/models';
+import { AnimalesService } from '../core/services/animales.service';
+import { FormsModule } from '@angular/forms';
 
-
-export class Animales {
-  animalesLista: Animal[] = [];
+@Component({
+  selector: 'app-animales',
+  imports: [FormsModule],
+  templateUrl: './animales.component.html',
+  styleUrl: './animales.component.css',
+})
+export class AnimalesComponent implements OnInit {
+  private animalesService = inject(AnimalesService);
+  animalesLista = signal<Animal[]>([]);
+  
   animal: Animal = { id: undefined, nomAnimal: '', raza: '', estadoRegistro: true };
   mensajeTexto: string = '';
   error: boolean = false;
 
-  constructor(private animalesService: AnimalesService) {
+
+  ngOnInit(): void {
     this.cargarAnimales();
   }
+
+  
 
   mensaje(): string { return this.mensajeTexto; }
   esError(): boolean { return this.error; }
 
   cargarAnimales(): void {
+
     this.animalesService.obtenerTodos().subscribe({
-      next: data => this.animalesLista = data,
-      error: () => { this.error = true; this.mensajeTexto = 'Error al cargar animales'; }
+      next: (data) => {
+        console.log('ANIMALES RECIBIDOS:', data);
+
+        this.animalesLista.set(data);
+
+        console.log('LISTA:', this.animalesLista);
+      },
+
+      error: (err) => {
+        console.error('ERROR AL CARGAR ANIMALES:', err);
+
+        this.error = true;
+        this.mensajeTexto = 'Error al cargar animales';
+      }
     });
   }
 
@@ -50,6 +75,4 @@ export class Animales {
   cancelar(): void {
     this.animal = { id: undefined, nomAnimal: '', raza: '', estadoRegistro: true };
   }
-
-  animales(): Animal[] { return this.animalesLista; }
 }

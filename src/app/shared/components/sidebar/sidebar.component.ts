@@ -9,16 +9,19 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
-  private readonly authService = inject(AuthService);
+  public readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   collapsed = signal(false);
 
   cerrarSession(){
-    this.authService.removerTokem();
+    this.authService.logout();
     this.router.navigate(['/auth/login'])
   }
 
   toggleSidebar(): void {
     this.collapsed.update(value => !value);
   }
+
+
+  
 }

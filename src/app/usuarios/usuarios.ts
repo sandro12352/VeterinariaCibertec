@@ -80,6 +80,8 @@ export class Usuarios implements OnInit {
 
 
 
+
+
   usuariosFiltrados = computed(() => {
 
     const texto = this.busqueda()
@@ -330,12 +332,19 @@ export class Usuarios implements OnInit {
     }
 
 
-    this.usuarios.update(
-      usuarios =>
-        usuarios.filter(
-          u => u.id !== usuario.id
-        )
-    );
+    this.usuarioService.eliminarUsuario(usuario).subscribe({
+
+      next: () => {
+        this.obtenerUsuarios();
+
+      },
+      error: (error) => {
+
+        console.error('Error al eliminar usuario:', error);
+
+      }
+
+    });
   }
 
 

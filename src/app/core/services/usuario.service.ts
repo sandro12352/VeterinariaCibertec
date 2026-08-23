@@ -21,4 +21,8 @@ export class UsuarioService {
     })
   }
 
+  eliminarUsuario(usuario:Usuario){
+    return this.http.delete(`api/v1/usuarios/${usuario.id}`);
+  }
+
 }

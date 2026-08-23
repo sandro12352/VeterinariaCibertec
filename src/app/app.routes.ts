@@ -25,12 +25,21 @@ export const routes: Routes = [
       },
       {
         path: 'atenciones',
-        loadComponent: () => import('./atencion/atencion').then((m) => m.Atenciones),
+        loadComponent: () => import('./atencion/atencion.component').then((m) => m.AtencionComponent),
       },
       {
         path: 'personal-medico',
         loadComponent: () => import('./personal-medico/personal-medico').then((m) => m.PersonalMedicoo),
       },
+      {
+        path: 'mascotas',
+        loadComponent: () => import('./mascotas/mascotas.component').then((m) => m.MascotasComponent),
+      },
+      {
+        path: 'mascotas/animales', // Mismo nivel dentro de main-layout
+        loadComponent: () => import('./animales/animales.component').then((m) => m.AnimalesComponent),
+      }
+
     ]
   },
 
